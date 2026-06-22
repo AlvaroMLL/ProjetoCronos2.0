@@ -3,10 +3,12 @@ package br.edu.ifpb.kuatiaoka.servico;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import br.edu.ifpb.kuatiaoka.modelo.Item;
-import br.edu.ifpb.kuatiaoka.modelo.Usuario;
-import br.edu.ifpb.kuatiaoka.modelo.Emprestimo;
+import br.edu.ifpb.kuatiaoka.modelo.Emprestimo.Emprestimo;
+import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
+import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
+import lombok.Data;
 
+@Data
 public class GerenciadorBiblioteca {
     private int proximoIdUsuario = 1;
     private int proximoIdItem = 1;

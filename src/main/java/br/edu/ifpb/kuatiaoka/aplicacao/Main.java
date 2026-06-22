@@ -3,9 +3,9 @@ package br.edu.ifpb.kuatiaoka.aplicacao;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import br.edu.ifpb.kuatiaoka.modelo.Emprestimo;
 import br.edu.ifpb.kuatiaoka.modelo.Item;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario;
+import br.edu.ifpb.kuatiaoka.modelo.Emprestimo.Emprestimo;
 import br.edu.ifpb.kuatiaoka.servico.GerenciadorBiblioteca;
 
 public class Main {
