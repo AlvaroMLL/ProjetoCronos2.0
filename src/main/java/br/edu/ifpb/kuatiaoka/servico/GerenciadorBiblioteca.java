@@ -3,15 +3,18 @@ package br.edu.ifpb.kuatiaoka.servico;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoEncontradoException;
-import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
+import br.edu.ifpb.kuatiaoka.excecao.EmprestimoEmAtrasoException;
+import br.edu.ifpb.kuatiaoka.excecao.EmprestimoNaoEncontradoExcepiton;
 import br.edu.ifpb.kuatiaoka.excecao.ItemIndisponivelException;
+import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
+import br.edu.ifpb.kuatiaoka.excecao.LimiteEmprestimosException;
+import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoEncontradoException;
+import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoRegularizadoException;
 import br.edu.ifpb.kuatiaoka.modelo.Emprestimo.Emprestimo;
-import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusEmprestimo;
+import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
-
 
 public class GerenciadorBiblioteca {
     private int proximoIdUsuario = 1;
@@ -64,7 +67,7 @@ public class GerenciadorBiblioteca {
                 return item;
             }
         }
-        return null;
+        throw new ItemNaoEncontradoException("Erro: Item não encontrado");
     }
 
     public Item buscarItemPorIsbn(String isbnBuscado) {
@@ -158,83 +161,61 @@ public class GerenciadorBiblioteca {
                 return usuario;
             }
         }
-        return null;
+        throw new UsuarioNaoEncontradoException("Erro: Usuario não encontrado");
     }
 
     public void realizarEmprestimo(int idUsuario, int idItem) {
         Usuario usuarioAchado = buscarUsuarioPorId(idUsuario);
         Item itemAchado = buscarItemPorId(idItem);
 
-        if (usuarioAchado == null) {
-            throw new UsuarioNaoEncontradoException("Erro: Usuario não encontrado");
-            return;
-        } 
-        if (itemAchado == null) {
-            throw new ItemNaoEncontradoException("Erro: Item não encontrado");
-            return;
-        }
         if (itemAchado.getStatusItem() != StatusItem.DISPONIVEL) {
             throw new ItemIndisponivelException("Erro: Item indisponível");
         }
         if (temEmprestimoEmAtraso(usuarioAchado)) {
-            System.out.println("Erro: usuário possui empréstimos em atraso.");
-            return;
+            throw new EmprestimoEmAtrasoException("Erro: Emprestimo atrasado");
         }
 
         int totalAtivos = contarEmprestimosAtivos(usuarioAchado);
 
-        if (itemAchado.getStatus().equalsIgnoreCase("Disponível")
-                && usuarioAchado.isRegularizado()) {
-
-            if (totalAtivos < usuarioAchado.getLimiteEmprestimos()) {
-                Emprestimo emprestimo = new Emprestimo();
-                emprestimo.setUsuario(usuarioAchado);
-                emprestimo.setItemEmprestado(itemAchado);
-                emprestimo.setIdDoEmprestimo(emprestimos.size() + 1);
-
-                int dias = usuarioAchado.calcularPrazo(itemAchado);
-
-                emprestimo.setDataDoEmprestimo(LocalDate.now());
-                emprestimo.setDataPrevista(LocalDate.now().plusDays(dias));
-
-                itemAchado.setStatus("Emprestado");
-                emprestimos.add(emprestimo);
-
-                System.out.println("Empréstimo realizado com sucesso!");
-            } else {
-                System.out.println("Erro: limite de empréstimos atingido.");
-            }
-
-        } else {
-            System.out.println("Erro: item indisponível ou usuário irregular.");
+        if (!usuarioAchado.isRegularizado()) {
+            throw new UsuarioNaoRegularizadoException("Erro: Usuario não regularizado");
         }
+        if (totalAtivos >= usuarioAchado.getLimiteEmprestimos()) {
+            throw new LimiteEmprestimosException("Erro: Limite de emprestimos atingido");
+        }
+
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.setUsuario(usuarioAchado);
+        emprestimo.setItemEmprestado(itemAchado);
+        emprestimo.setIdDoEmprestimo(emprestimos.size() + 1);
+
+        int dias = usuarioAchado.calcularPrazo(itemAchado);
+
+        emprestimo.setDataDoEmprestimo(LocalDate.now());
+        emprestimo.setDataPrevista(LocalDate.now().plusDays(dias));
+
+        itemAchado.setStatusItem(StatusItem.EMPRESTADO);
+        emprestimos.add(emprestimo);
+
+        System.out.println("Empréstimo realizado com sucesso!");
     }
 
     public int contarEmprestimosAtivos(Usuario usuario) {
         int cont = 0;
         for (Emprestimo emprestimo : emprestimos) {
             if (usuario.getId() == emprestimo.getUsuario().getId()
-                    && emprestimo.getStatus().equalsIgnoreCase("EM_ABERTO")) {
+                    && emprestimo.getStatus() != StatusEmprestimo.ATRASADO
+                    && emprestimo.getStatus() != StatusEmprestimo.MULTA_PEDENTE) {
                 cont = cont + 1;
             }
         }
         return cont;
     }
 
-    public void registrarDevolucao(int idItemDevolvido) {
-        for (Emprestimo emprestimo : emprestimos) {
-            if (idItemDevolvido == emprestimo.getItemEmprestado().getId()
-                    && emprestimo.getStatus().equalsIgnoreCase("EM_ABERTO")) {
-                emprestimo.setDataDevolucao(LocalDate.now());
-                emprestimo.setStatus("FINALIZADO");
-                emprestimo.getItemEmprestado().setStatus("Disponível");
-                verificarMulta(emprestimo);
-                System.out.println(
-                        "Devolução do item " + emprestimo.getItemEmprestado().getTitulo() + " realizada com sucesso!");
-                return;
-            }
+    public void registrarDevolucao(int) {
+        if () {
+            
         }
-        System.out.println("Erro: item não encontrado ou não está emprestado.");
     }
 
     // Nesse método eu transformei LocalDate em um long usando .toEpochDay()
@@ -274,7 +255,7 @@ public class GerenciadorBiblioteca {
     public ArrayList<Emprestimo> listarEmprestimosEmAberto() {
         ArrayList<Emprestimo> lista = new ArrayList<>();
         for (Emprestimo e : emprestimos) {
-            if (e.getStatus().equalsIgnoreCase("EM_ABERTO")) {
+            if (e.getStatus() == StatusEmprestimo.EM_ABERTO) {
                 lista.add(e);
             }
         }
@@ -284,8 +265,7 @@ public class GerenciadorBiblioteca {
     public ArrayList<Emprestimo> listarEmprestimosAtrasados() {
         ArrayList<Emprestimo> lista = new ArrayList<>();
         for (Emprestimo e : emprestimos) {
-            if (e.getStatus().equalsIgnoreCase("EM_ABERTO")
-                    && e.getDataPrevista().isBefore(LocalDate.now())) {
+            if (e.getStatus() == StatusEmprestimo.ATRASADO) {
                 lista.add(e);
             }
         }
@@ -304,10 +284,19 @@ public class GerenciadorBiblioteca {
 
     public void listarItensDisponiveis() {
         for (Item item : itens) {
-            if (item.getStatus().equalsIgnoreCase("Disponível")) {
+            if (item.getStatusItem() == StatusItem.DISPONIVEL) {
                 System.out.println("ID: " + item.getId() + " | "
                         + item.getTipo() + ": " + item.getTitulo());
             }
         }
+    }
+
+    public Emprestimo buscarEmprestimoPorId(int idBuscado) {
+        for (Emprestimo emprestimo : emprestimos) {
+            if (emprestimo.getIdDoEmprestimo() == idBuscado) {
+                return emprestimo;
+            }
+        }
+        throw new EmprestimoNaoEncontradoExcepiton("Erro: Emprestimo não encontrado");
     }
 }
