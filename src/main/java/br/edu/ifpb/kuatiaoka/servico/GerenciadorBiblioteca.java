@@ -2,12 +2,15 @@ package br.edu.ifpb.kuatiaoka.servico;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.ifpb.kuatiaoka.excecao.EmprestimoEmAtrasoException;
+import br.edu.ifpb.kuatiaoka.excecao.EmprestimoFinalizadoException;
 import br.edu.ifpb.kuatiaoka.excecao.EmprestimoNaoEncontradoExcepiton;
 import br.edu.ifpb.kuatiaoka.excecao.ItemIndisponivelException;
 import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.excecao.LimiteEmprestimosException;
+import br.edu.ifpb.kuatiaoka.excecao.MultaInexistenteException;
 import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoRegularizadoException;
 import br.edu.ifpb.kuatiaoka.modelo.Emprestimo.Emprestimo;
@@ -113,33 +116,11 @@ public class GerenciadorBiblioteca {
         return resultado;
     }
 
-    public ArrayList<Item> buscarItemPorStatus(String statusBuscado) {
-        ArrayList<Item> resultado = new ArrayList<>();
-        for (Item item : itens) {
-            if (item.getStatus().equalsIgnoreCase(statusBuscado)) {
-                resultado.add(item);
-            }
-        }
-        return resultado;
-    }
-
     public ArrayList<Item> buscarItemPorEditora(String editoraBuscada) {
         ArrayList<Item> resultado = new ArrayList<>();
         for (Item item : itens) {
             if (item.getEditora().equalsIgnoreCase(editoraBuscada)) {
                 resultado.add(item);
-            }
-        }
-        return resultado;
-    }
-
-    public ArrayList<Item> buscarItemPorGenero(String generoBuscado) {
-        ArrayList<Item> resultado = new ArrayList<>();
-        for (Item item : itens) {
-            if (item.getGeneroLiterario() != null) {
-                if (item.getGeneroLiterario().equalsIgnoreCase(generoBuscado)) {
-                    resultado.add(item);
-                }
             }
         }
         return resultado;
@@ -212,33 +193,22 @@ public class GerenciadorBiblioteca {
         return cont;
     }
 
-    public void registrarDevolucao(int) {
-        if () {
-            
+    public void registrarDevolucao(int idEmprestimo) {
+        Emprestimo emprestimoBuscado = buscarEmprestimoPorId(idEmprestimo);
+        if (emprestimoBuscado.getStatus() == StatusEmprestimo.DEVOLVIDO) {
+            throw new EmprestimoFinalizadoException("Erro: Emprestimo já finalizado");
         }
-    }
-
-    // Nesse método eu transformei LocalDate em um long usando .toEpochDay()
-    // (pesquisei LocalDate javadoc no google) para conseguir achar o numero de dias
-    // de atraso e calcular a multa.
-    public void verificarMulta(Emprestimo emprestimo) {
-        if (emprestimo.getDataDevolucao().isAfter(emprestimo.getDataPrevista())) {
-            long diasAtraso = emprestimo.getDataDevolucao().toEpochDay() - emprestimo.getDataPrevista().toEpochDay();
-            double valorPorDia = 0;
-
-            if (emprestimo.getUsuario().getCategoria().equalsIgnoreCase("aluno de graduação")) {
-                valorPorDia = 2.00;
-            } else if (emprestimo.getUsuario().getCategoria().equalsIgnoreCase("professor")
-                    || emprestimo.getUsuario().getCategoria().equalsIgnoreCase("aluno de pós-graduação")) {
-                valorPorDia = 1.00;
-            } else {
-                valorPorDia = 1.50;
-            }
-            double multaTotal = diasAtraso * valorPorDia;
-            emprestimo.getUsuario().setMultaPendente(multaTotal);
-            emprestimo.getUsuario().setRegularizado(false);
+        emprestimoBuscado.setDataDevolucao(LocalDate.now());
+        if (emprestimoBuscado.getDataPrevista().isBefore(emprestimoBuscado.getDataDevolucao())) {
+            long diasAtraso = emprestimoBuscado.getDataDevolucao().toEpochDay()
+                    - emprestimoBuscado.getDataPrevista().toEpochDay();
+            double multaTotal = diasAtraso * emprestimoBuscado.getUsuario().getMultaDiaria();
+            emprestimoBuscado.getUsuario().setRegularizado(false);
+            emprestimoBuscado.getUsuario().setMultaPendente(multaTotal);
             System.out.println("Multa de R$ " + multaTotal + " aplicada por " + diasAtraso + " dias de atraso.");
         }
+        emprestimoBuscado.setStatus(StatusEmprestimo.DEVOLVIDO);
+        emprestimoBuscado.getItemEmprestado().setStatusItem(StatusItem.DISPONIVEL);
     }
 
     public boolean temEmprestimoEmAtraso(Usuario usuario) {
@@ -298,5 +268,15 @@ public class GerenciadorBiblioteca {
             }
         }
         throw new EmprestimoNaoEncontradoExcepiton("Erro: Emprestimo não encontrado");
+    }
+
+    public void pagarMulta(int idUsuario) {
+        Usuario usuario = buscarUsuarioPorId(idUsuario);
+        if (usuario.getMultaPendente() <= 0) {
+            throw new MultaInexistenteException("Erro: Multa inexistente");
+        }
+        usuario.setMultaPendente(0);
+        usuario.setRegularizado(true);
+        System.out.println("Pagamento realizado com sucesso.");
     }
 }
