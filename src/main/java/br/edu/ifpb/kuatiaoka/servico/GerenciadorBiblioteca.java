@@ -242,7 +242,7 @@ public class GerenciadorBiblioteca {
         return lista;
     }
 
-    public ArrayList<Emprestimo> listarPorUsuario(int idUsuario) {
+    public ArrayList<Emprestimo> listarEmprestimosPorUsuario(int idUsuario) {
         ArrayList<Emprestimo> lista = new ArrayList<>();
         for (Emprestimo e : emprestimos) {
             if (e.getUsuario().getId() == idUsuario) {
@@ -278,5 +278,15 @@ public class GerenciadorBiblioteca {
         usuario.setMultaPendente(0);
         usuario.setRegularizado(true);
         System.out.println("Pagamento realizado com sucesso.");
+    }
+
+    public ArrayList<Usuario> listarUsuariosComMulta() {
+        ArrayList<Usuario> lista = new ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getMultaPendente() > 0) {
+               lista.add(usuario);
+            }
+        }
+        return lista;
     }
 }
