@@ -16,12 +16,13 @@ import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
 
 public class ServicoEmprestimo {
-
+    private ServicoUsuario servicoUsuario;
+    private ServicoItem servicoItem;
     private ArrayList<Emprestimo> emprestimos = new ArrayList<>();
 
     public void realizarEmprestimo(int idUsuario, int idItem) {
-        Usuario usuarioAchado = buscarUsuarioPorId(idUsuario);
-        Item itemAchado = buscarItemPorId(idItem);
+        Usuario usuarioAchado = servicoUsuario.buscarUsuarioPorId(idUsuario);
+        Item itemAchado = servicoItem.buscarItemPorId(idItem);
 
         if (itemAchado.getStatusItem() != StatusItem.DISPONIVEL) {
             throw new ItemIndisponivelException("Erro: Item indisponível");

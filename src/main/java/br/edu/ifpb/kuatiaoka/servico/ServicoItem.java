@@ -29,7 +29,7 @@ public class ServicoItem {
     public ArrayList<Item> buscarItemPorTitulo(String tituloBuscado) {
         ArrayList<Item> resultado = new ArrayList<>();
         for (Item item : itens) {
-            if (item.getTitulo().equalsIgnoreCase(tituloBuscado)) {
+            if (item.getTitulo().equalsIgnoreCase(tituloBuscado)){
                 resultado.add(item);
             }
         }
@@ -58,7 +58,7 @@ public class ServicoItem {
     public ArrayList<Item> buscarItemPorAutor(String autorBuscado) {
         ArrayList<Item> resultado = new ArrayList<>();
         for (Item item : itens) {
-            if (item.getAutores() != null && item.getTipo().equalsIgnoreCase("livro")) {
+            if (item.getAutores() != null) {
                 for (String autor : item.getAutores()) {
                     if (autor.equalsIgnoreCase(autorBuscado)) {
                         resultado.add(item);
@@ -70,10 +70,10 @@ public class ServicoItem {
         return resultado;
     }
 
-    public ArrayList<Item> buscarItemPorEditora(String editoraBuscada) {
+    public ArrayList<Item> buscarLivroPorEditora(String editoraBuscada) {
         ArrayList<Item> resultado = new ArrayList<>();
         for (Item item : itens) {
-            if (item.getEditora().equalsIgnoreCase(editoraBuscada)) {
+            if (().equalsIgnoreCase(editoraBuscada)) {
                 resultado.add(item);
             }
         }
@@ -87,5 +87,9 @@ public class ServicoItem {
                         + item.getTipo() + ": " + item.getTitulo());
             }
         }
+    }
+
+    public ArrayList<Item> buscaritemPorStatus(String statusBuscado) {
+
     }
 }
