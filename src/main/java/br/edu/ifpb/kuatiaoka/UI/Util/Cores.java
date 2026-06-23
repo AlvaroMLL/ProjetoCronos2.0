@@ -1,4 +1,4 @@
-package br.edu.ifpb.kuatiaoka.UI;
+package br.edu.ifpb.kuatiaoka.UI.Util;
 
 public interface Cores {
     String AZUL = "\u001B[34m";
