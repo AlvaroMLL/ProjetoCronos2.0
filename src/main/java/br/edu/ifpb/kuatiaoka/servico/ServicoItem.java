@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
+import br.edu.ifpb.kuatiaoka.modelo.Item.Livro;
+import br.edu.ifpb.kuatiaoka.modelo.Item.Revista;
 
 public class ServicoItem {
     private int proximoIdItem = 1;
@@ -29,7 +31,7 @@ public class ServicoItem {
     public ArrayList<Item> buscarItemPorTitulo(String tituloBuscado) {
         ArrayList<Item> resultado = new ArrayList<>();
         for (Item item : itens) {
-            if (item.getTitulo().equalsIgnoreCase(tituloBuscado)){
+            if (item.getTitulo().equalsIgnoreCase(tituloBuscado)) {
                 resultado.add(item);
             }
         }
@@ -43,16 +45,6 @@ public class ServicoItem {
             }
         }
         throw new ItemNaoEncontradoException("Erro: Item não encontrado");
-    }
-
-    public ArrayList<Item> buscarItemPorTipo(String tipoBuscado) {
-        ArrayList<Item> resultado = new ArrayList<>();
-        for (Item item : itens) {
-            if (item.getTipo().equalsIgnoreCase(tipoBuscado)) {
-                resultado.add(item);
-            }
-        }
-        return resultado;
     }
 
     public ArrayList<Item> buscarItemPorAutor(String autorBuscado) {
@@ -70,26 +62,46 @@ public class ServicoItem {
         return resultado;
     }
 
-    public ArrayList<Item> buscarLivroPorEditora(String editoraBuscada) {
-        ArrayList<Item> resultado = new ArrayList<>();
+    public ArrayList<Livro> buscarLivroPorEditora(String editoraBuscada) {
+        ArrayList<Livro> resultado = new ArrayList<>();
         for (Item item : itens) {
-            if (().equalsIgnoreCase(editoraBuscada)) {
-                resultado.add(item);
+            if (item instanceof Livro livro) {
+                if (livro.getEditora().getNome().equalsIgnoreCase(editoraBuscada)) {
+                    resultado.add(livro);
+                }
             }
         }
         return resultado;
+    }
+
+    public Livro buscarLivroPorIsbn(String isbnBuscado) {
+        for (Item item : itens) {
+            if (item instanceof Livro livro) {
+                if (livro.getIsbn().equalsIgnoreCase(isbnBuscado)) {
+                    return livro;
+                }
+            }
+        }
+        throw new ItemNaoEncontradoException("Erro: Livro não encontrado.");
+    }
+
+    public Revista buscarRevistaPorIssn(String issnBuscado) {
+        for (Item item : itens) {
+            if (item instanceof Revista revista) {
+                if (revista.getIssn().equalsIgnoreCase(issnBuscado)) {
+                    return revista;
+                }
+            }
+        }
+        throw new ItemNaoEncontradoException("Erro: Revista não encontrada.");
     }
 
     public void listarItensDisponiveis() {
         for (Item item : itens) {
             if (item.getStatusItem() == StatusItem.DISPONIVEL) {
                 System.out.println("ID: " + item.getId() + " | "
-                        + item.getTipo() + ": " + item.getTitulo());
+                        + item.getClass().getSimpleName() + ": " + item.getTitulo());
             }
         }
-    }
-
-    public ArrayList<Item> buscaritemPorStatus(String statusBuscado) {
-
     }
 }

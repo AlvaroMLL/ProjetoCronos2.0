@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Revista extends Item implements Emprestavel{
-    private int issn;
+    private String issn;
     private String volume;
     private int numero;
     private Editora editora;

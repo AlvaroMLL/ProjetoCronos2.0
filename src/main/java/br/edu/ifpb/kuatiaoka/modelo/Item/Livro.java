@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Livro extends Item implements Emprestavel{
+public class Livro extends Item implements Emprestavel {
     private String isbn;
     private Editora editora;
     private int anoDePublicacao;
@@ -18,7 +18,6 @@ public class Livro extends Item implements Emprestavel{
 
     @Override
     public void emprestar() {
-        
+
     }
 }
-

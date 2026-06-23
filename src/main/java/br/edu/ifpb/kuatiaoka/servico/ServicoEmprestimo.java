@@ -136,4 +136,14 @@ public class ServicoEmprestimo {
         throw new EmprestimoNaoEncontradoExcepiton("Erro: Emprestimo não encontrado");
     }
 
+    public ArrayList<Emprestimo> listarHistoricoPorItem(int idItem) {
+        servicoItem.buscarItemPorId(idItem);
+        ArrayList<Emprestimo> resultado = new ArrayList<>();
+        for (Emprestimo emprestimo : emprestimos) {
+            if (emprestimo.getItemEmprestado().getId() == idItem) {
+                resultado.add(emprestimo);
+            }
+        }
+        return resultado;
+    }
 }

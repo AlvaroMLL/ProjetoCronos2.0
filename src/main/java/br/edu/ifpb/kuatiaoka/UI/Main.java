@@ -1,4 +1,4 @@
-package br.edu.ifpb.kuatiaoka.aplicacao;
+package br.edu.ifpb.kuatiaoka.UI;
 
 import java.util.ArrayList;
 import java.util.Scanner;

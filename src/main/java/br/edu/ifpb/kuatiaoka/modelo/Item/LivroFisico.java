@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class LivroFisico extends Livro {
     private int numeroDePaginas;
+
 }
