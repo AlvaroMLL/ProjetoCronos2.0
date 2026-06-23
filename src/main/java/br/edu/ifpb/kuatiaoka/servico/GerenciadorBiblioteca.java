@@ -3,12 +3,16 @@ package br.edu.ifpb.kuatiaoka.servico;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoEncontradoException;
+import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
+import br.edu.ifpb.kuatiaoka.excecao.ItemIndisponivelException;
 import br.edu.ifpb.kuatiaoka.modelo.Emprestimo.Emprestimo;
+import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
+import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusEmprestimo;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
-import lombok.Data;
 
-@Data
+
 public class GerenciadorBiblioteca {
     private int proximoIdUsuario = 1;
     private int proximoIdItem = 1;
@@ -161,9 +165,16 @@ public class GerenciadorBiblioteca {
         Usuario usuarioAchado = buscarUsuarioPorId(idUsuario);
         Item itemAchado = buscarItemPorId(idItem);
 
-        if (usuarioAchado == null || itemAchado == null) {
-            System.out.println("Erro: usuário ou item não encontrado.");
+        if (usuarioAchado == null) {
+            throw new UsuarioNaoEncontradoException("Erro: Usuario não encontrado");
             return;
+        } 
+        if (itemAchado == null) {
+            throw new ItemNaoEncontradoException("Erro: Item não encontrado");
+            return;
+        }
+        if (itemAchado.getStatusItem() != StatusItem.DISPONIVEL) {
+            throw new ItemIndisponivelException("Erro: Item indisponível");
         }
         if (temEmprestimoEmAtraso(usuarioAchado)) {
             System.out.println("Erro: usuário possui empréstimos em atraso.");
@@ -249,11 +260,10 @@ public class GerenciadorBiblioteca {
         }
     }
 
-
     public boolean temEmprestimoEmAtraso(Usuario usuario) {
         for (Emprestimo e : emprestimos) {
             if (e.getUsuario().getId() == usuario.getId()
-                    && e.getStatus().equalsIgnoreCase("EM_ABERTO")
+                    && e.getStatus() != StatusEmprestimo.EM_ABERTO && e.getStatus() != StatusEmprestimo.DEVOLVIDO
                     && e.getDataPrevista().isBefore(LocalDate.now())) {
                 return true;
             }

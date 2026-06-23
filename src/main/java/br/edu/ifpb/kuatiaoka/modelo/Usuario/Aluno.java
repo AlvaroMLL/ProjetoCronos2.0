@@ -1,6 +1,5 @@
 package br.edu.ifpb.kuatiaoka.modelo.Usuario;
 
-import br.edu.ifpb.kuatiaoka.modelo.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,7 +1,5 @@
 package br.edu.ifpb.kuatiaoka.modelo.Usuario;
 
-import br.edu.ifpb.kuatiaoka.modelo.Usuario;
-
 public class Professor extends Usuario{
     // Pode pegar até 5 itens simultaneamente por ate 7 dias (outros) ou 14 dias (livros), multa de 1.00R$ por dia por item
     private static final int LIMITE_EMPRESTIMOS = 5;

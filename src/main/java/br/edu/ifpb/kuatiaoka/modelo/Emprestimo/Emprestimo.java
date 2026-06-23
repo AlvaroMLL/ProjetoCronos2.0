@@ -2,6 +2,7 @@ package br.edu.ifpb.kuatiaoka.modelo.Emprestimo;
 
 import java.time.LocalDate;
 
+import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusEmprestimo;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
 import lombok.Data;
@@ -14,5 +15,5 @@ public class Emprestimo {
     private int idDoEmprestimo;
     private Item itemEmprestado;
     private Usuario usuario;
-    private String status = "EM_ABERTO";
+    private StatusEmprestimo status = StatusEmprestimo.EM_ABERTO;
 }

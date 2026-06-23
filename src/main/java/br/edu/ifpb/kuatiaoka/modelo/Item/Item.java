@@ -8,5 +8,5 @@ public class Item {
     private String titulo;
     private String[] autores;
     private int id;
-    private StatusItem statusItem;
+    private StatusItem statusItem = StatusItem.DISPONIVEL;
 }
