@@ -2,16 +2,12 @@ package br.edu.ifpb.kuatiaoka.servico;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import br.edu.ifpb.kuatiaoka.excecao.EmprestimoEmAtrasoException;
 import br.edu.ifpb.kuatiaoka.excecao.EmprestimoFinalizadoException;
 import br.edu.ifpb.kuatiaoka.excecao.EmprestimoNaoEncontradoExcepiton;
 import br.edu.ifpb.kuatiaoka.excecao.ItemIndisponivelException;
-import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.excecao.LimiteEmprestimosException;
-import br.edu.ifpb.kuatiaoka.excecao.MultaInexistenteException;
-import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoRegularizadoException;
 import br.edu.ifpb.kuatiaoka.modelo.Emprestimo.Emprestimo;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusEmprestimo;
@@ -19,131 +15,9 @@ import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
 
-public class GerenciadorBiblioteca {
-    private int proximoIdUsuario = 1;
-    private int proximoIdItem = 1;
-    private ArrayList<Usuario> usuarios = new ArrayList<>();
-    private ArrayList<Item> itens = new ArrayList<>();
+public class ServicoEmprestimo {
+
     private ArrayList<Emprestimo> emprestimos = new ArrayList<>();
-
-    public ArrayList<Item> getItens() {
-        return this.itens;
-    }
-
-    public int getProximoIdItem() {
-        return proximoIdItem;
-    }
-
-    public void setProximoIdItem(int proximoIdItem) {
-        this.proximoIdItem = proximoIdItem;
-    }
-
-    public void adicionarUsuario(Usuario usuario) {
-        this.usuarios.add(usuario);
-    }
-
-    public void adicionarItem(Item item) {
-        this.itens.add(item);
-    }
-
-    public int getProximoIdUsuario() {
-        return proximoIdUsuario;
-    }
-
-    public void setProximoIdUsuario(int proximoIdUsuario) {
-        this.proximoIdUsuario = proximoIdUsuario;
-    }
-
-    public ArrayList<Item> buscarItemPorTitulo(String tituloBuscado) {
-        ArrayList<Item> resultado = new ArrayList<>();
-        for (Item item : itens) {
-            if (item.getTitulo().equalsIgnoreCase(tituloBuscado)) {
-                resultado.add(item);
-            }
-        }
-        return resultado;
-    }
-
-    public Item buscarItemPorId(int idBuscado) {
-        for (Item item : itens) {
-            if (item.getId() == idBuscado) {
-                return item;
-            }
-        }
-        throw new ItemNaoEncontradoException("Erro: Item não encontrado");
-    }
-
-    public Item buscarItemPorIsbn(String isbnBuscado) {
-        for (Item item : itens) {
-            if (item.getIsbn().equalsIgnoreCase(isbnBuscado)) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public Item buscarItemPorIssn(String issnBuscado) {
-        for (Item item : itens) {
-            if (item.getIssn().equalsIgnoreCase(issnBuscado)) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public ArrayList<Item> buscarItemPorTipo(String tipoBuscado) {
-        ArrayList<Item> resultado = new ArrayList<>();
-        for (Item item : itens) {
-            if (item.getTipo().equalsIgnoreCase(tipoBuscado)) {
-                resultado.add(item);
-            }
-        }
-        return resultado;
-    }
-
-    public ArrayList<Item> buscarItemPorAutor(String autorBuscado) {
-        ArrayList<Item> resultado = new ArrayList<>();
-        for (Item item : itens) {
-            if (item.getAutores() != null && item.getTipo().equalsIgnoreCase("livro")) {
-                for (String autor : item.getAutores()) {
-                    if (autor.equalsIgnoreCase(autorBuscado)) {
-                        resultado.add(item);
-                        break;
-                    }
-                }
-            }
-        }
-        return resultado;
-    }
-
-    public ArrayList<Item> buscarItemPorEditora(String editoraBuscada) {
-        ArrayList<Item> resultado = new ArrayList<>();
-        for (Item item : itens) {
-            if (item.getEditora().equalsIgnoreCase(editoraBuscada)) {
-                resultado.add(item);
-            }
-        }
-        return resultado;
-    }
-
-    public ArrayList<Usuario> buscarUsuarioPorNome(String nomeBuscado) {
-        ArrayList<Usuario> resultado = new ArrayList<>();
-        for (Usuario usuario : usuarios) {
-            if (usuario.getNome().toLowerCase().contains(nomeBuscado.toLowerCase())) {
-                resultado.add(usuario);
-            }
-        }
-        return resultado;
-    }
-
-    public Usuario buscarUsuarioPorId(int idBuscado) {
-        for (Usuario usuario : usuarios) {
-            if (usuario.getId() == idBuscado) {
-                return usuario;
-            }
-        }
-        throw new UsuarioNaoEncontradoException("Erro: Usuario não encontrado");
-    }
 
     public void realizarEmprestimo(int idUsuario, int idItem) {
         Usuario usuarioAchado = buscarUsuarioPorId(idUsuario);
@@ -252,15 +126,6 @@ public class GerenciadorBiblioteca {
         return lista;
     }
 
-    public void listarItensDisponiveis() {
-        for (Item item : itens) {
-            if (item.getStatusItem() == StatusItem.DISPONIVEL) {
-                System.out.println("ID: " + item.getId() + " | "
-                        + item.getTipo() + ": " + item.getTitulo());
-            }
-        }
-    }
-
     public Emprestimo buscarEmprestimoPorId(int idBuscado) {
         for (Emprestimo emprestimo : emprestimos) {
             if (emprestimo.getIdDoEmprestimo() == idBuscado) {
@@ -270,23 +135,4 @@ public class GerenciadorBiblioteca {
         throw new EmprestimoNaoEncontradoExcepiton("Erro: Emprestimo não encontrado");
     }
 
-    public void pagarMulta(int idUsuario) {
-        Usuario usuario = buscarUsuarioPorId(idUsuario);
-        if (usuario.getMultaPendente() <= 0) {
-            throw new MultaInexistenteException("Erro: Multa inexistente");
-        }
-        usuario.setMultaPendente(0);
-        usuario.setRegularizado(true);
-        System.out.println("Pagamento realizado com sucesso.");
-    }
-
-    public ArrayList<Usuario> listarUsuariosComMulta() {
-        ArrayList<Usuario> lista = new ArrayList<>();
-        for (Usuario usuario : usuarios) {
-            if (usuario.getMultaPendente() > 0) {
-               lista.add(usuario);
-            }
-        }
-        return lista;
-    }
 }
