@@ -1,8 +1,13 @@
 package br.edu.ifpb.kuatiaoka.UI.ItensUI;
 
+import java.math.BigDecimal;
+
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.GeneroLiterario;
+import br.edu.ifpb.kuatiaoka.modelo.Enum.TipoJogo;
 import br.edu.ifpb.kuatiaoka.modelo.Item.AudioLivro;
+import br.edu.ifpb.kuatiaoka.modelo.Item.Cd;
+import br.edu.ifpb.kuatiaoka.modelo.Item.Jogo;
 import br.edu.ifpb.kuatiaoka.modelo.Item.LivroFisico;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Revista;
 import br.edu.ifpb.kuatiaoka.servico.ServicoItem;
@@ -99,7 +104,7 @@ public class ItemCadastro {
                     livroFisico.setNumeroDePaginas(numeroDePaginas);
                     servicoItem.adicionarItem(livroFisico);
                     console.pause();
-                    
+
                     break;
                 case 2:
                     AudioLivro audiolivro = new AudioLivro();
@@ -209,17 +214,27 @@ public class ItemCadastro {
 
                     System.out.println("\nDigite o Artista Do Cd: ");
                     String artistaCd = console.nextLine();
-                    
+
                     System.out.println("\nDigite a Quantidade De Faixas Do Cd: ");
-                    int qtdFaixas = console.nextInt();
+                    int qtdFaixas = Integer.parseInt(console.nextLine());
+                    String[] faixaInformadas = new String[qtdFaixas];
 
-                    for (qtdFaixas) {
-
+                    for (int i = 0; i < qtdFaixas; i++) {
+                        System.out.print("\nDigite o Nome Da Faixa " + (i + 1) + ": ");
+                        faixaInformadas[i] = console.nextLine();
                     }
+
+                    Cd cd = new Cd();
+
+                    cd.setTitulo(tituloCd);
+                    cd.setAutor(artistaCd);
+                    cd.setListaDeFaixas(faixaInformadas);
+                    console.pause();
+
                     break;
                 case 5:
                     Jogo jogo = new Jogo();
-                    
+
                     System.out.println("=== CADASTRO DE JOGO ===");
                     System.out.println("\nDigite o Nome Do Jogo: ");
                     String NomeJogo = console.nextLine();
@@ -230,7 +245,7 @@ public class ItemCadastro {
                     System.out.println("\nDigite o Preco Do Jogo (So os numeros): ");
                     String precoString = console.nextLine();
                     BigDecimal preco = new BigDecimal(precoString);
-                    
+
                     System.out.println("1 - Tabuleiro | 2 - Cartas");
                     System.out.println("\nEscolha Qual o Tipo Do Jogo: ");
                     int tipoJogo = console.nextInt();
