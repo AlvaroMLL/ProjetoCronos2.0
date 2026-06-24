@@ -6,13 +6,16 @@ import br.edu.ifpb.kuatiaoka.modelo.Item.AudioLivro;
 import br.edu.ifpb.kuatiaoka.modelo.Item.LivroFisico;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Revista;
 import br.edu.ifpb.kuatiaoka.servico.ServicoItem;
+import br.edu.ifpb.kuatiaoka.servico.ServicoVenda;
 
 public class ItemCadastro {
     private Console console = new Console();
     private ServicoItem servicoItem;
+    private ServicoVenda servicoVenda;
 
-    public ItemCadastro(ServicoItem servicoItem) {
+    public ItemCadastro(ServicoItem servicoItem, ServicoVenda servicoVenda) {
         this.servicoItem = servicoItem;
+        this.servicoVenda = servicoVenda;
     }
 
     public void exibirCadastroItens() {
@@ -95,8 +98,8 @@ public class ItemCadastro {
                     livroFisico.setSinopse(sinopseLivro);
                     livroFisico.setNumeroDePaginas(numeroDePaginas);
                     servicoItem.adicionarItem(livroFisico);
-
-                    console.mensagemSucesso("Livro Fisico Cadastrado Com Sucesso!");
+                    console.pause();
+                    
                     break;
                 case 2:
                     AudioLivro audiolivro = new AudioLivro();
@@ -120,8 +123,8 @@ public class ItemCadastro {
                     System.out.println("\nDigite a Edicao Do Audiolivro: ");
                     String edicaoAudiolivro = console.nextLine();
 
-                    System.out.println("Escolha o Genero Literario Do Livro: ");
                     System.out.println("1 - Ficcao Cientifica | 2 - Romance | 3 - Terror | 4 - Biografia | 5 - Outro");
+                    System.out.println("\nEscolha o Genero Literario Do Livro: ");
                     int opcaoGeneroAudiolivro = console.nextInt();
                     switch (opcaoGeneroAudiolivro) {
                         case 1:
@@ -140,7 +143,8 @@ public class ItemCadastro {
                             audiolivro.setGeneroLiterario(GeneroLiterario.OUTRO);
                             break;
                         default:
-                            console.mensagemErro("Numero Invalido!");
+                            console.mensagemErro("=== NUMERO INVALIDO ===");
+                            console.pause();
                             break;
                     }
 
@@ -159,6 +163,7 @@ public class ItemCadastro {
                     audiolivro.setSinopse(sinopseAudiolivro);
                     audiolivro.setDuracaoMinutos(duracaoAudiolivro);
                     servicoItem.adicionarItem(audiolivro);
+                    console.pause();
 
                     break;
                 case 3:
@@ -194,6 +199,7 @@ public class ItemCadastro {
                     revista.setEditora(editoraRevista);
                     revista.setDataDePublicacaoString(dataPubliRevista);
                     servicoItem.adicionarItem(revista);
+                    console.pause();
 
                     break;
                 case 4:
@@ -212,10 +218,44 @@ public class ItemCadastro {
                     }
                     break;
                 case 5:
+                    Jogo jogo = new Jogo();
+                    
                     System.out.println("=== CADASTRO DE JOGO ===");
                     System.out.println("\nDigite o Nome Do Jogo: ");
                     String NomeJogo = console.nextLine();
-                    // Vou ficar devendo o resto
+
+                    System.out.println("\nDigite a Quantidade De Pecas Do Jogo: ");
+                    int qtdPecas = console.nextInt();
+
+                    System.out.println("\nDigite o Preco Do Jogo (So os numeros): ");
+                    String precoString = console.nextLine();
+                    BigDecimal preco = new BigDecimal(precoString);
+                    
+                    System.out.println("1 - Tabuleiro | 2 - Cartas");
+                    System.out.println("\nEscolha Qual o Tipo Do Jogo: ");
+                    int tipoJogo = console.nextInt();
+
+                    switch (tipoJogo) {
+                        case 1:
+                            jogo.setTipoJogo(TipoJogo.TABULEIRO);
+
+                            break;
+                        case 2:
+                            jogo.setTipoJogo(TipoJogo.CARTAS);
+
+                            break;
+                        default:
+                            console.mensagemErro("=== NUMERO INVALIDO ===");
+                            console.pause();
+                            break;
+                    }
+
+                    jogo.setNome(NomeJogo);
+                    jogo.setQtdPecas(qtdPecas);
+                    jogo.setPreco(preco);
+                    servicoVenda.cadastrarJogo(jogo);
+                    console.pause();
+
                     break;
                 case 0:
                     break;

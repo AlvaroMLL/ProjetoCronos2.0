@@ -15,7 +15,7 @@ public class ServicoUsuario {
     public void adicionarUsuario(Usuario usuario) {
         usuario.setId(proximoIdUsuario);
         this.usuarios.add(usuario);
-        console.mensagemSucesso("=== USUARIO COM ID:" + proximoIdUsuario + "CRIADO COM SUCESSO! ===");
+        console.mensagemSucesso("=== " + usuario.getClass().getSimpleName().toUpperCase() + " COM ID: " + proximoIdUsuario + " CRIADO COM SUCESSO! ===");
         proximoIdUsuario++;
     }
 

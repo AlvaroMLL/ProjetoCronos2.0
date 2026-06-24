@@ -16,7 +16,7 @@ public class ServicoItem {
 
     public void adicionarItem(Item item) {
         item.setId(proximoIdItem);
-        console.mensagemSucesso("=== ITEM COM ID: " + proximoIdItem + " CRIADO COM SUCESSO! ===");
+        console.mensagemSucesso("=== " + item.getClass().getSimpleName().toUpperCase() + " COM ID: " + proximoIdItem + " CRIADO COM SUCESSO! ===");
         this.itens.add(item);
         proximoIdItem++;
     }

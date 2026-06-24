@@ -22,7 +22,7 @@ public class ServicoVenda {
 
     public void cadastrarJogo(Jogo jogo) {
         jogo.setIdJogo(proximoIdJogo);
-        console.mensagemSucesso("=== ITEM COM ID: " + proximoIdJogo + " CRIADO COM SUCESSO! ===");
+        console.mensagemSucesso("=== JOGO COM ID: " + proximoIdJogo + " CRIADO COM SUCESSO! ===");
         this.jogos.add(jogo);
         proximoIdJogo++;
     }

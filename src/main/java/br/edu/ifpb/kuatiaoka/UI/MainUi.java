@@ -36,7 +36,7 @@ public class MainUi {
     public void executar() {
         int opcao = -1;
         UsuarioMenu usuarioMenu = new UsuarioMenu(servicoUsuario);
-        ItemMenu itemMenu = new ItemMenu(servicoItem);
+        ItemMenu itemMenu = new ItemMenu(servicoItem, servicoVenda);
         EmprestimoMenu emprestimoMenu = new EmprestimoMenu(servicoEmprestimo, servicoItem, servicoUsuario);
         VendaMenu vendaMenu = new VendaMenu(servicoVenda, servicoUsuario);
 

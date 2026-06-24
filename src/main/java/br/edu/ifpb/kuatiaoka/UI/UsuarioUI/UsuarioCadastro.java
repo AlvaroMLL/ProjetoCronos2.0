@@ -46,9 +46,8 @@ public class UsuarioCadastro {
                     aluno.setNome(nomeAluno);
                     aluno.setEmail(emailAluno);
                     servicoUsuario.adicionarUsuario(aluno);
-
-                    console.mensagemSucesso("=== ALUNO CADASTRADO COM SUCESSO! ===");
                     console.pause();
+
                     break;
 
                 case 2:
@@ -64,9 +63,8 @@ public class UsuarioCadastro {
                     professor.setNome(nomeProfessor);
                     professor.setEmail(emailProfessor);
                     servicoUsuario.adicionarUsuario(professor);
-
-                    console.mensagemSucesso("=== PROFESSOR CADASTRADO COM SUCESSO! ===");
                     console.pause();
+
                     break;
 
                 case 3:
@@ -82,9 +80,8 @@ public class UsuarioCadastro {
                     admin.setNome(nomeAdmin);
                     admin.setEmail(emailAdmin);
                     servicoUsuario.adicionarUsuario(admin);
-
-                    console.mensagemSucesso("=== ADMINISTRATIVO CADASTRADO COM SUCESSO! ===");
                     console.pause();
+
                     break;
                 case 0:
                     break;

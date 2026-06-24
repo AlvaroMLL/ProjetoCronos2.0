@@ -2,15 +2,18 @@ package br.edu.ifpb.kuatiaoka.UI.ItensUI;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 import br.edu.ifpb.kuatiaoka.servico.ServicoItem;
+import br.edu.ifpb.kuatiaoka.servico.ServicoVenda;
 import lombok.Data;
 
 @Data
 public class ItemMenu {
     private Console console = new Console();
     private ServicoItem servicoItem;
+    private ServicoVenda servicoVenda;
 
-    public ItemMenu(ServicoItem servicoItem) {
+    public ItemMenu(ServicoItem servicoItem, ServicoVenda servicoVenda) {
         this.servicoItem = servicoItem;
+        this.servicoVenda = servicoVenda;
     }
 
     public void exibirMenuItem() {
@@ -24,7 +27,7 @@ public class ItemMenu {
     public void executar() {
         int opcao = -1;
         ItemBusca itemBusca = new ItemBusca(servicoItem);
-        ItemCadastro itemCadastro = new ItemCadastro(servicoItem);
+        ItemCadastro itemCadastro = new ItemCadastro(servicoItem, servicoVenda);
 
         do {
             exibirMenuItem();
