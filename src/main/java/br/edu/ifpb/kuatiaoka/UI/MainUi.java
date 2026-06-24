@@ -9,15 +9,20 @@ import br.edu.ifpb.kuatiaoka.servico.ServicoEmprestimo;
 import br.edu.ifpb.kuatiaoka.servico.ServicoItem;
 import br.edu.ifpb.kuatiaoka.servico.ServicoUsuario;
 import br.edu.ifpb.kuatiaoka.servico.ServicoVenda;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class MainUi {
     private ServicoUsuario servicoUsuario;
     private ServicoItem servicoItem;
     private ServicoEmprestimo servicoEmprestimo;
     private ServicoVenda servicoVenda;
     private Console console = new Console();
+
+    public MainUi() {
+        this.servicoUsuario = new ServicoUsuario();
+        this.servicoItem = new ServicoItem();
+        this.servicoEmprestimo = new ServicoEmprestimo();
+        this.servicoVenda = new ServicoVenda();
+    }
 
     public void ebixirMenu() {
         System.out.println("=== MENU PRINCIPAL ===");
@@ -30,10 +35,10 @@ public class MainUi {
 
     public void executar() {
         int opcao = -1;
-        UsuarioMenu usuarioMenu = new UsuarioMenu();
-        ItemMenu itemMenu = new ItemMenu();
-        EmprestimoMenu emprestimoMenu = new EmprestimoMenu();
-        VendaMenu vendaMenu = new VendaMenu();
+        UsuarioMenu usuarioMenu = new UsuarioMenu(servicoUsuario);
+        ItemMenu itemMenu = new ItemMenu(servicoItem);
+        EmprestimoMenu emprestimoMenu = new EmprestimoMenu(servicoEmprestimo);
+        VendaMenu vendaMenu = new VendaMenu(servicoVenda);
 
         do {
             ebixirMenu();

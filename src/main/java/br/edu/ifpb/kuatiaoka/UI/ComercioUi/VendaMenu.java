@@ -1,9 +1,15 @@
 package br.edu.ifpb.kuatiaoka.UI.ComercioUi;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.servico.ServicoVenda;
 
 public class VendaMenu {
     private Console console = new Console();
+    private ServicoVenda servicoVenda;
+
+    public VendaMenu(ServicoVenda servicoVenda) {
+        this.servicoVenda = servicoVenda;
+    }
 
     public void exibirMenuVenda() {
         System.out.println("=== VENDA DE JOGOS ===");

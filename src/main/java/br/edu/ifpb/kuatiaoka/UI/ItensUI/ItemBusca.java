@@ -1,9 +1,15 @@
 package br.edu.ifpb.kuatiaoka.UI.ItensUI;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.servico.ServicoItem;
 
 public class ItemBusca {
     private Console console = new Console();
+    private ServicoItem servicoItem;
+    
+    public ItemBusca(ServicoItem servicoItem) {
+        this.servicoItem = servicoItem;
+    }
 
     public void exibirBuscaItem() {
         System.out.println("=== BUSCA DE ITENS ===");

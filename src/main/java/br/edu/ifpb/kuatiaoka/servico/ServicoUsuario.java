@@ -11,7 +11,9 @@ public class ServicoUsuario {
     private int proximoIdUsuario = 1;
 
     public void adicionarUsuario(Usuario usuario) {
-        this.usuarios.add(usuario);
+        usuario.setId(proximoIdUsuario);
+        proximoIdUsuario++;
+        this.usuarios.add(usuario); 
     }
 
     public int getProximoIdUsuario() {

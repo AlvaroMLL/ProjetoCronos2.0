@@ -1,11 +1,17 @@
 package br.edu.ifpb.kuatiaoka.UI.UsuarioUI;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.servico.ServicoUsuario;
 import lombok.Data;
 
 @Data
 public class UsuarioMenu {
+    private ServicoUsuario servicoUsuario;
     private Console console = new Console();
+
+    public UsuarioMenu(ServicoUsuario servicoUsuario) {
+        this.servicoUsuario = servicoUsuario;
+    }
 
     public void exibirMenuUsuario() {
 
@@ -19,14 +25,14 @@ public class UsuarioMenu {
 
     public void executar() {
         int opcao = -1;
+        UsuarioCadastro usuarioCadastro = new UsuarioCadastro(servicoUsuario);
+        UsuarioBusca usuarioBusca = new UsuarioBusca(servicoUsuario);
 
         do {
             exibirMenuUsuario();
 
             System.out.println("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
-            UsuarioCadastro usuarioCadastro = new UsuarioCadastro();
-            UsuarioBusca usuarioBusca = new UsuarioBusca();
 
             switch (opcao) {
                 case 1:

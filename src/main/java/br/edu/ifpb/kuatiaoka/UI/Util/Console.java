@@ -20,4 +20,11 @@ public class Console {
         return scanner.nextLine();
     }
 
+    public void mensagemErro(String mensagem) {
+        System.out.println(Cores.VERMELHO + mensagem + Cores.RESET);
+    }
+
+    public void mensagemSucesso(String mensagem) {
+        System.out.println(Cores.VERDE + mensagem + Cores.RESET);
+    }
 }

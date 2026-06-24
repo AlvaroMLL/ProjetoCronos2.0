@@ -1,9 +1,15 @@
 package br.edu.ifpb.kuatiaoka.UI.ComercioUi;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.servico.ServicoEmprestimo;
 
 public class EmprestimoMenu {
     private Console console = new Console();
+    private ServicoEmprestimo servicoEmprestimo;
+
+    public EmprestimoMenu(ServicoEmprestimo servicoEmprestimo) {
+        this.servicoEmprestimo = servicoEmprestimo;
+    }
 
     public void exibirMenuEmprestimo() {
         System.out.println("=== MENU EMPRESTIMO ===");

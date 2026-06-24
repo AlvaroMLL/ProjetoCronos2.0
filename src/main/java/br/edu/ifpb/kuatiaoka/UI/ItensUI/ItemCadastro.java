@@ -1,9 +1,15 @@
 package br.edu.ifpb.kuatiaoka.UI.ItensUI;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.servico.ServicoItem;
 
 public class ItemCadastro {
     private Console console = new Console();
+    private ServicoItem servicoItem;
+
+    public ItemCadastro(ServicoItem servicoItem) {
+        this.servicoItem = servicoItem;
+    }
 
     public void exibirCadastroItens() {
         System.out.println("=== CADASTRO DE ITENS ===");
