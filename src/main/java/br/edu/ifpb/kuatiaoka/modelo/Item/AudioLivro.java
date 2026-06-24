@@ -1,6 +1,5 @@
 package br.edu.ifpb.kuatiaoka.modelo.Item;
 
-import br.edu.ifpb.kuatiaoka.modelo.Interface.Emprestavel;
 import lombok.Getter;
 import lombok.Setter;
 

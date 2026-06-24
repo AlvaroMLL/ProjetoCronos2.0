@@ -15,9 +15,4 @@ public class Livro extends Item implements Emprestavel {
     private String edicao;
     private GeneroLiterario generoLiterario;
     private String sinopse;
-
-    @Override
-    public void emprestar() {
-
-    }
 }

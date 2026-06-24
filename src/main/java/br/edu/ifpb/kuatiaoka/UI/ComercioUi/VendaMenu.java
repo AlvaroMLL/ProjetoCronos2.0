@@ -1,14 +1,14 @@
-package br.edu.ifpb.kuatiaoka.UI.UsuarioUI;
+package br.edu.ifpb.kuatiaoka.UI.ComercioUi;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 
-public class UsuarioBusca {
+public class VendaMenu {
     private Console console = new Console();
 
-    public void exibirBuscaUsuario() {
-        System.out.println("=== BUSCA DE USUÁRIOS ===");
-        System.out.println("1 - Busca Usuario por Nome");
-        System.out.println("2 - Busca Usuario por ID");
+    public void exibirMenuVenda() {
+        System.out.println("=== VENDA DE JOGOS ===");
+        System.out.println("1 - Realizar Venda");
+        System.out.println("2 - Listar Historico De Vendas");
         System.out.println("0 - Voltar");
     }
 
@@ -16,23 +16,18 @@ public class UsuarioBusca {
         int opcao = -1;
 
         do {
-            exibirBuscaUsuario();
+            exibirMenuVenda();
 
             System.out.println("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
 
             switch (opcao) {
                 case 1:
+
                     break;
                 case 2:
-                    break;
 
-                case 3:
                     break;
-
-                case 4:
-                    break;
-
                 case 0:
                     break;
                 default:

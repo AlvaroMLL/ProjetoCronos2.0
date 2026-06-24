@@ -8,7 +8,7 @@ import br.edu.ifpb.kuatiaoka.modelo.Interface.Vendivel;
 import lombok.Data;
 
 @Data
-public class Jogo implements Emprestavel, Vendivel{
+public class Jogo implements Emprestavel, Vendivel {
     private String nome;
     private int qtdPecas;
     private BigDecimal preco;
