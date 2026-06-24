@@ -37,8 +37,8 @@ public class MainUi {
         int opcao = -1;
         UsuarioMenu usuarioMenu = new UsuarioMenu(servicoUsuario);
         ItemMenu itemMenu = new ItemMenu(servicoItem);
-        EmprestimoMenu emprestimoMenu = new EmprestimoMenu(servicoEmprestimo);
-        VendaMenu vendaMenu = new VendaMenu(servicoVenda);
+        EmprestimoMenu emprestimoMenu = new EmprestimoMenu(servicoEmprestimo, servicoItem, servicoUsuario);
+        VendaMenu vendaMenu = new VendaMenu(servicoVenda, servicoUsuario);
 
         do {
             ebixirMenu();
@@ -49,24 +49,25 @@ public class MainUi {
             switch (opcao) {
                 case 1:
                     usuarioMenu.executar();
+
                     break;
                 case 2:
                     itemMenu.executar();
-                    break;
 
+                    break;
                 case 3:
                     emprestimoMenu.executar();
-                    break;
 
+                    break;
                 case 4:
                     vendaMenu.executar();
-                    break;
 
+                    break;
                 case 0:
                     System.out.println("Encerrando Programa...");
                     break;
                 default:
-                    System.out.println("Opcao Invalida.");
+                    console.mensagemErro("=== OPCAO INVALIDA ===");
 
             }
         } while (opcao != 0);

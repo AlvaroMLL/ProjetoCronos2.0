@@ -220,7 +220,7 @@ public class ItemCadastro {
                 case 0:
                     break;
                 default:
-                    System.out.println("Opcao Invalida.");
+                    console.mensagemErro("=== OPCAO INVALIDA ===");
 
             }
         } while (opcao != 0);

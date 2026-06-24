@@ -3,6 +3,7 @@ package br.edu.ifpb.kuatiaoka.servico;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Jogo;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
@@ -13,6 +14,7 @@ public class ServicoVenda {
     private ArrayList<Venda> vendas = new ArrayList<>();
     private ServicoUsuario servicoUsuario;
     private int proximoIdJogo = 1;
+    private Console console;
 
     public int proximoIdJogo() {
         return proximoIdJogo;
@@ -20,8 +22,9 @@ public class ServicoVenda {
 
     public void cadastrarJogo(Jogo jogo) {
         jogo.setIdJogo(proximoIdJogo);
-        proximoIdJogo++;
+        console.mensagemSucesso("=== ITEM COM ID: " + proximoIdJogo + " CRIADO COM SUCESSO! ===");
         this.jogos.add(jogo);
+        proximoIdJogo++;
     }
 
     public void cadastrarVenda(Venda venda) {
@@ -49,7 +52,7 @@ public class ServicoVenda {
         venda.setIdVenda(vendas.size() + 1);
         vendas.add(venda);
 
-        System.out.println("Venda realizado com sucesso!");
+        console.mensagemSucesso("=== VENDA REALIZADA COM SUCESSO! ===");
     }
 
     public void listarVendas() {
@@ -58,6 +61,13 @@ public class ServicoVenda {
                     "\nNome: " + venda.getJogo().getNome() +
                     "\nValor: R$ " + venda.getValor() +
                     "\nID do Comprador: " + venda.getComprador().getId());
+        }
+    }
+
+    public void listarJogos() {
+        for (Jogo jogo : jogos) {
+            System.out.println("ID: " + jogo.getIdJogo() + " | "
+                    + jogo.getNome() + ": " + jogo.getPreco());
         }
     }
 }

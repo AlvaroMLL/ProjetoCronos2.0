@@ -1,14 +1,17 @@
 package br.edu.ifpb.kuatiaoka.UI.ComercioUi;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.servico.ServicoUsuario;
 import br.edu.ifpb.kuatiaoka.servico.ServicoVenda;
 
 public class VendaMenu {
     private Console console = new Console();
     private ServicoVenda servicoVenda;
+    private ServicoUsuario servicoUsuario;
 
-    public VendaMenu(ServicoVenda servicoVenda) {
+    public VendaMenu(ServicoVenda servicoVenda, ServicoUsuario servicoUsuario) {
         this.servicoVenda = servicoVenda;
+        this.servicoUsuario = servicoUsuario;
     }
 
     public void exibirMenuVenda() {
@@ -29,15 +32,29 @@ public class VendaMenu {
 
             switch (opcao) {
                 case 1:
+                    System.out.println("=== REALIZANDO VENDA ===");
+                    servicoVenda.listarJogos();
+                    System.out.println("\nDigite o ID Do Jogo Que Sera Comprado: ");
+                    int jogoId = console.nextInt();
+
+                    servicoUsuario.listarUsuarios();
+                    System.out.println("\nDigite o ID Do Comprador: ");
+                    int idUsuario = console.nextInt();
+
+                    servicoVenda.realizarVenda(idUsuario, jogoId);
+                    console.pause();
 
                     break;
                 case 2:
+                    System.out.println("=== LISTANDO HISTORICO DE VENDAS ===");
+                        servicoVenda.listarVendas();
+                        console.pause();
 
                     break;
                 case 0:
                     break;
                 default:
-                    System.out.println("Opcao Invalida.");
+                    console.mensagemErro("=== OPCAO INVALIDA ===");
 
             }
         } while (opcao != 0);

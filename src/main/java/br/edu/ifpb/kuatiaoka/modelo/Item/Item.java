@@ -1,7 +1,5 @@
 package br.edu.ifpb.kuatiaoka.modelo.Item;
 
-import java.util.List;
-
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import lombok.Data;
 

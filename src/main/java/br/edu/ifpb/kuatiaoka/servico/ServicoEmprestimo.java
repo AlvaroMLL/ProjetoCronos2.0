@@ -14,11 +14,13 @@ import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusEmprestimo;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
+import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 
 public class ServicoEmprestimo {
     private ServicoUsuario servicoUsuario;
     private ServicoItem servicoItem;
     private ArrayList<Emprestimo> emprestimos = new ArrayList<>();
+    private Console console;
 
     public void realizarEmprestimo(int idUsuario, int idItem) {
         Usuario usuarioAchado = servicoUsuario.buscarUsuarioPorId(idUsuario);
@@ -53,7 +55,7 @@ public class ServicoEmprestimo {
         itemAchado.setStatusItem(StatusItem.EMPRESTADO);
         emprestimos.add(emprestimo);
 
-        System.out.println("Empréstimo realizado com sucesso!");
+        console.mensagemSucesso("=== EMPRESTIMO REALIZADO COM SUCESSO! ===");
     }
 
     public int contarEmprestimosAtivos(Usuario usuario) {
@@ -84,6 +86,7 @@ public class ServicoEmprestimo {
         }
         emprestimoBuscado.setStatus(StatusEmprestimo.DEVOLVIDO);
         emprestimoBuscado.getItemEmprestado().setStatusItem(StatusItem.DISPONIVEL);
+        console.mensagemSucesso("=== DEVOLUCAO REALIZADA COM SUCESSO! ===");
     }
 
     public boolean temEmprestimoEmAtraso(Usuario usuario) {

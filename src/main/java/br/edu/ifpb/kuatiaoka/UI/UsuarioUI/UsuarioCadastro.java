@@ -31,7 +31,6 @@ public class UsuarioCadastro {
 
             System.out.println("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
-            ;
 
             switch (opcao) {
                 case 1:
@@ -48,7 +47,7 @@ public class UsuarioCadastro {
                     aluno.setEmail(emailAluno);
                     servicoUsuario.adicionarUsuario(aluno);
 
-                    console.mensagemSucesso("Aluno Cadastrado Com Sucesso!");
+                    console.mensagemSucesso("=== ALUNO CADASTRADO COM SUCESSO! ===");
                     console.pause();
                     break;
 
@@ -66,7 +65,7 @@ public class UsuarioCadastro {
                     professor.setEmail(emailProfessor);
                     servicoUsuario.adicionarUsuario(professor);
 
-                    console.mensagemSucesso("Professor Cadastrado Com Sucesso!");
+                    console.mensagemSucesso("=== PROFESSOR CADASTRADO COM SUCESSO! ===");
                     console.pause();
                     break;
 
@@ -84,13 +83,13 @@ public class UsuarioCadastro {
                     admin.setEmail(emailAdmin);
                     servicoUsuario.adicionarUsuario(admin);
 
-                    console.mensagemSucesso("Administrativo Cadastrado Com Sucesso!");
+                    console.mensagemSucesso("=== ADMINISTRATIVO CADASTRADO COM SUCESSO! ===");
                     console.pause();
                     break;
                 case 0:
                     break;
                 default:
-                    System.out.println("Opcao Invalida.");
+                    console.mensagemErro("=== OPCAO INVALIDA ===");
             }
         } while (opcao != 0);
     }

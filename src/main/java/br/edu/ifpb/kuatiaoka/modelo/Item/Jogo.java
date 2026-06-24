@@ -9,6 +9,7 @@ import lombok.Data;
 
 @Data
 public class Jogo implements Emprestavel, Vendivel {
+    // O Servicos De Jogo Estao Na Classe ServicoVenda
     private String nome;
     private int qtdPecas;
     private BigDecimal preco;

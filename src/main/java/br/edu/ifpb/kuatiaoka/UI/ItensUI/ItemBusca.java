@@ -34,58 +34,78 @@ public class ItemBusca {
 
             switch (opcao) {
                 case 1:
+                    System.out.println("=== BUSCANDO ITEM PELO TITULO ===");
                     System.out.println("\nDigite o Titulo Do Item: ");
                     String titulo = console.nextLine();
 
                     servicoItem.buscarItemPorTitulo(titulo);
+                    console.pause();
+
                     break;
                 case 2:
+                    System.out.println("=== BUSCANDO ITEM POR ID ===");
                     System.out.println("\nDigite o ID Do Item: ");
                     int id = console.nextInt();
 
                     try {
                         servicoItem.buscarItemPorId(id);
+                        console.pause();
                     } catch (ItemNaoEncontradoException e) {
                         console.mensagemErro(e.getMessage());
+                        console.pause();
                     }
+
                     break;
                 case 3:
+                    System.out.println("=== BUSCANDO ITEM PELA EDITORA ===");
                     System.out.println("\nDigite o Editora Do Item: ");
                     String editora = console.nextLine();
 
                     servicoItem.buscarLivroPorEditora(editora);
+                    console.pause();
+
                     break;
                 case 4:
+                    System.out.println("=== BUSCANDO ITEM PELO AUTOR ===");
                     System.out.println("\nDigite o Autor Do Item: ");
                     String autor = console.nextLine();
 
                     servicoItem.buscarItemPorAutor(autor);
+                    console.pause();
+
                     break;
                 case 5:
+                    System.out.println("=== BUSCANDO LIVRO PELO ISBN ===");
                     System.out.println("\nDigite o ISBN Do Livro: ");
                     String isbn = console.nextLine();
 
                     try {
                         servicoItem.buscarLivroPorIsbn(isbn);
+                        console.pause();
                     } catch (ItemNaoEncontradoException e) {
                         console.mensagemErro(e.getMessage());
+                        console.pause();
                     }
 
                     break;
                 case 6:
+                    System.out.println("=== BUSCANDO REVISTA PELO ISSN ===");
                     System.out.println("\nDigite o ISSN Da Revista: ");
                     String issn = console.nextLine();
 
                     try {
                         servicoItem.buscarRevistaPorIssn(issn);
+                        console.pause();
                     } catch (ItemNaoEncontradoException e) {
                         console.mensagemErro(e.getMessage());
+                        console.pause();
                     }
+
                     break;
                 case 0:
                     break;
                 default:
-                    System.out.println("Opcao Invalida.");
+                    console.mensagemErro("=== OPCAO INVALIDA ===");
 
             }
         } while (opcao != 0);

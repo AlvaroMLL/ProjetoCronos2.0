@@ -35,6 +35,7 @@ public class UsuarioBusca {
                     String nome = console.nextLine();
 
                     servicoUsuario.buscarUsuarioPorNome(nome);
+                    console.pause();
 
                     break;
                 case 2:
@@ -43,16 +44,18 @@ public class UsuarioBusca {
                     int idBuscado = console.nextInt();
 
                     try {
-                       servicoUsuario.buscarUsuarioPorId(idBuscado);
+                        servicoUsuario.buscarUsuarioPorId(idBuscado);
+                        console.pause();
                     } catch (UsuarioNaoEncontradoException e) {
                         console.mensagemErro(e.getMessage());
+                        console.pause();
                     }
-                    
+
                     break;
                 case 0:
                     break;
                 default:
-                    System.out.println("Opcao Invalida.");
+                    console.mensagemErro("=== OPCAO INVALIDA ===");
 
             }
         } while (opcao != 0);

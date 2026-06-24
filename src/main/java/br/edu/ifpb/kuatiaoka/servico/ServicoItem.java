@@ -2,6 +2,7 @@ package br.edu.ifpb.kuatiaoka.servico;
 
 import java.util.ArrayList;
 
+import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
@@ -11,11 +12,13 @@ import br.edu.ifpb.kuatiaoka.modelo.Item.Revista;
 public class ServicoItem {
     private int proximoIdItem = 1;
     private ArrayList<Item> itens = new ArrayList<>();
+    private Console console;
 
     public void adicionarItem(Item item) {
         item.setId(proximoIdItem);
-        proximoIdItem++;
+        console.mensagemSucesso("=== ITEM COM ID: " + proximoIdItem + " CRIADO COM SUCESSO! ===");
         this.itens.add(item);
+        proximoIdItem++;
     }
 
     public int getProximoIdItem() {
@@ -99,6 +102,13 @@ public class ServicoItem {
                 System.out.println("ID: " + item.getId() + " | "
                         + item.getClass().getSimpleName() + ": " + item.getTitulo());
             }
+        }
+    }
+
+    public void listarItens() {
+        for (Item item : itens) {
+            System.out.println("ID: " + item.getId() + " | "
+                    + item.getClass().getSimpleName() + ": " + item.getTitulo());
         }
     }
 }

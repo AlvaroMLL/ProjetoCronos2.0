@@ -1,6 +1,7 @@
 package br.edu.ifpb.kuatiaoka.UI.UsuarioUI;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.excecao.MultaInexistenteException;
 import br.edu.ifpb.kuatiaoka.servico.ServicoUsuario;
 import lombok.Data;
 
@@ -37,21 +38,36 @@ public class UsuarioMenu {
             switch (opcao) {
                 case 1:
                     usuarioCadastro.executar();
+
                     break;
                 case 2:
                     usuarioBusca.executar();
-                    break;
 
+                    break;
                 case 3:
-                    break;
+                    servicoUsuario.listarUsuariosComMulta();
+                    console.pause();
 
+                    break;
                 case 4:
-                    break;
+                    System.out.println("=== PAGANDO MULTA DE USUARIO ===");
+                    servicoUsuario.listarUsuarios();
+                    System.out.println("\nDigite o ID Do Usuario Que Tera a Multa Paga: ");
+                    int idUsuario = console.nextInt();
 
+                    try {
+                        servicoUsuario.pagarMulta(idUsuario);
+                        console.pause();
+                    } catch (MultaInexistenteException e) {
+                        console.mensagemErro(e.getMessage());
+                        console.pause();
+                    }
+
+                    break;
                 case 0:
                     break;
                 default:
-                    System.out.println("Opcao Invalida.");
+                    console.mensagemErro("=== OPCAO INVALIDA ===");
 
             }
         } while (opcao != 0);

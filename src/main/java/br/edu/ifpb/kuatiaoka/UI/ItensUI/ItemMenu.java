@@ -35,18 +35,22 @@ public class ItemMenu {
             switch (opcao) {
                 case 1:
                     itemCadastro.executar();
+
                     break;
                 case 2:
                     itemBusca.executar();
-                    break;
 
+                    break;
                 case 3:
-                    break;
+                    System.out.println("=== LISTANDO ITENS DISPONIVEIS ===");
+                    servicoItem.listarItensDisponiveis();
+                    console.pause();
 
+                    break;
                 case 0:
                     break;
                 default:
-                    System.out.println("Opcao Invalida.");
+                    console.mensagemErro("=== OPCAO INVALIDA ===");
             }
         } while (opcao != 0);
     }
