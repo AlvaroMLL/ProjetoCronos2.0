@@ -27,21 +27,22 @@ public class VendaMenu {
         do {
             exibirMenuVenda();
 
-            System.out.println("\nEscolha Uma Opcao: ");
+            System.out.print("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
 
             switch (opcao) {
                 case 1:
                     System.out.println("=== REALIZANDO VENDA ===");
                     servicoVenda.listarJogos();
-                    System.out.println("\nDigite o ID Do Jogo Que Sera Comprado: ");
+                    System.out.print("\nDigite o ID Do Jogo Que Sera Comprado: ");
                     int jogoId = console.nextInt();
 
                     servicoUsuario.listarUsuarios();
-                    System.out.println("\nDigite o ID Do Comprador: ");
+                    System.out.print("\nDigite o ID Do Comprador: ");
                     int idUsuario = console.nextInt();
 
                     servicoVenda.realizarVenda(idUsuario, jogoId);
+                    console.mensagemSucesso("=== VENDA FEITA COM SUCESSO ===");
                     console.pause();
 
                     break;

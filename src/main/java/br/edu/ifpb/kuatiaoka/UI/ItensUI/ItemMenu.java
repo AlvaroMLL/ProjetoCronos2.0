@@ -32,7 +32,7 @@ public class ItemMenu {
         do {
             exibirMenuItem();
 
-            System.out.println("\nEscolha Uma Opcao: ");
+            System.out.print("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
 
             switch (opcao) {

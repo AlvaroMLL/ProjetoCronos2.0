@@ -35,7 +35,7 @@ public class ItemBusca {
             switch (opcao) {
                 case 1:
                     System.out.println("=== BUSCANDO ITEM PELO TITULO ===");
-                    System.out.println("\nDigite o Titulo Do Item: ");
+                    System.out.print("\nDigite o Titulo Do Item: ");
                     String titulo = console.nextLine();
 
                     servicoItem.buscarItemPorTitulo(titulo);
@@ -44,7 +44,7 @@ public class ItemBusca {
                     break;
                 case 2:
                     System.out.println("=== BUSCANDO ITEM POR ID ===");
-                    System.out.println("\nDigite o ID Do Item: ");
+                    System.out.print("\nDigite o ID Do Item: ");
                     int id = console.nextInt();
 
                     try {
@@ -58,7 +58,7 @@ public class ItemBusca {
                     break;
                 case 3:
                     System.out.println("=== BUSCANDO ITEM PELA EDITORA ===");
-                    System.out.println("\nDigite o Editora Do Item: ");
+                    System.out.print("\nDigite o Editora Do Item: ");
                     String editora = console.nextLine();
 
                     servicoItem.buscarLivroPorEditora(editora);
@@ -67,7 +67,7 @@ public class ItemBusca {
                     break;
                 case 4:
                     System.out.println("=== BUSCANDO ITEM PELO AUTOR ===");
-                    System.out.println("\nDigite o Autor Do Item: ");
+                    System.out.print("\nDigite o Autor Do Item: ");
                     String autor = console.nextLine();
 
                     servicoItem.buscarItemPorAutor(autor);
@@ -76,7 +76,7 @@ public class ItemBusca {
                     break;
                 case 5:
                     System.out.println("=== BUSCANDO LIVRO PELO ISBN ===");
-                    System.out.println("\nDigite o ISBN Do Livro: ");
+                    System.out.print("\nDigite o ISBN Do Livro: ");
                     String isbn = console.nextLine();
 
                     try {
@@ -90,7 +90,7 @@ public class ItemBusca {
                     break;
                 case 6:
                     System.out.println("=== BUSCANDO REVISTA PELO ISSN ===");
-                    System.out.println("\nDigite o ISSN Da Revista: ");
+                    System.out.print("\nDigite o ISSN Da Revista: ");
                     String issn = console.nextLine();
 
                     try {

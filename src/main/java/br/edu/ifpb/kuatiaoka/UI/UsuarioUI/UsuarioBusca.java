@@ -25,22 +25,22 @@ public class UsuarioBusca {
         do {
             exibirBuscaUsuario();
 
-            System.out.println("\nEscolha Uma Opcao: ");
+            System.out.print("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
 
             switch (opcao) {
                 case 1:
                     System.out.println("=== BUSCA DE USUARIO POR NOME ===");
-                    System.out.println("\nDigite o Nome Do Usuario Buscado: ");
+                    System.out.print("\nDigite o Nome Do Usuario Buscado: ");
                     String nome = console.nextLine();
 
-                    servicoUsuario.buscarUsuarioPorNome(nome);
+                    System.out.println(servicoUsuario.buscarUsuarioPorNome(nome));
                     console.pause();
 
                     break;
                 case 2:
                     System.out.println("=== BUSCA DE USUARIO POR ID ===");
-                    System.out.println("\nDigite o ID Do Usuario: ");
+                    System.out.print("\nDigite o ID Do Usuario: ");
                     int idBuscado = console.nextInt();
 
                     try {

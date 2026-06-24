@@ -2,7 +2,6 @@ package br.edu.ifpb.kuatiaoka.servico;
 
 import java.util.ArrayList;
 
-import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
@@ -12,11 +11,9 @@ import br.edu.ifpb.kuatiaoka.modelo.Item.Revista;
 public class ServicoItem {
     private int proximoIdItem = 1;
     private ArrayList<Item> itens = new ArrayList<>();
-    private Console console;
 
     public void adicionarItem(Item item) {
         item.setId(proximoIdItem);
-        console.mensagemSucesso("=== " + item.getClass().getSimpleName().toUpperCase() + " COM ID: " + proximoIdItem + " CRIADO COM SUCESSO! ===");
         this.itens.add(item);
         proximoIdItem++;
     }
@@ -49,7 +46,7 @@ public class ServicoItem {
                 return item;
             }
         }
-        throw new ItemNaoEncontradoException("Erro: Item não encontrado");
+        throw new ItemNaoEncontradoException("=== ERRO: ITEM NAO ENCONTRADO ===");
     }
 
     public ArrayList<Item> buscarItemPorAutor(String autorBuscado) {
@@ -82,7 +79,7 @@ public class ServicoItem {
                 }
             }
         }
-        throw new ItemNaoEncontradoException("Erro: Livro não encontrado.");
+        throw new ItemNaoEncontradoException("=== ERRO: LIVRO NAO ENCONTRADO ===");
     }
 
     public Revista buscarRevistaPorIssn(String issnBuscado) {
@@ -93,7 +90,7 @@ public class ServicoItem {
                 }
             }
         }
-        throw new ItemNaoEncontradoException("Erro: Revista não encontrada.");
+        throw new ItemNaoEncontradoException("=== ERRO: REVISTA NAO ENCONTRADA ===");
     }
 
     public void listarItensDisponiveis() {

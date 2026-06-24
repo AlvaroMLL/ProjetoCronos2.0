@@ -2,20 +2,17 @@ package br.edu.ifpb.kuatiaoka.servico;
 
 import java.util.ArrayList;
 
-import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 import br.edu.ifpb.kuatiaoka.excecao.MultaInexistenteException;
 import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
 
 public class ServicoUsuario {
     private ArrayList<Usuario> usuarios = new ArrayList<>();
-    private int proximoIdUsuario = 1;
-    private Console console;
+    private int proximoIdUsuario = 0;
 
     public void adicionarUsuario(Usuario usuario) {
         usuario.setId(proximoIdUsuario);
         this.usuarios.add(usuario);
-        console.mensagemSucesso("=== " + usuario.getClass().getSimpleName().toUpperCase() + " COM ID: " + proximoIdUsuario + " CRIADO COM SUCESSO! ===");
         proximoIdUsuario++;
     }
 
@@ -43,18 +40,16 @@ public class ServicoUsuario {
                 return usuario;
             }
         }
-        throw new UsuarioNaoEncontradoException("Erro: Usuario não encontrado");
+        throw new UsuarioNaoEncontradoException("=== ERRO: USUARIO NAO ENCONTRADO ===");
     }
 
     public void pagarMulta(int idUsuario) {
         Usuario usuario = buscarUsuarioPorId(idUsuario);
         if (usuario.getMultaPendente() <= 0) {
-            throw new MultaInexistenteException("Erro: Multa inexistente");
+            throw new MultaInexistenteException("=== ERRO: MULTA INEXISTENTE ===");
         }
         usuario.setMultaPendente(0);
         usuario.setRegularizado(true);
-        console.mensagemSucesso("=== PAGAMENTO REALIZADO COM SUCESSO! ===");
-        ;
     }
 
     public ArrayList<Usuario> listarUsuariosComMulta() {

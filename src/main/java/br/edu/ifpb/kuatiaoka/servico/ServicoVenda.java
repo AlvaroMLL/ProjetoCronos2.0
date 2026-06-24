@@ -3,7 +3,6 @@ package br.edu.ifpb.kuatiaoka.servico;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Jogo;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
@@ -14,7 +13,6 @@ public class ServicoVenda {
     private ArrayList<Venda> vendas = new ArrayList<>();
     private ServicoUsuario servicoUsuario;
     private int proximoIdJogo = 1;
-    private Console console;
 
     public int proximoIdJogo() {
         return proximoIdJogo;
@@ -22,7 +20,6 @@ public class ServicoVenda {
 
     public void cadastrarJogo(Jogo jogo) {
         jogo.setIdJogo(proximoIdJogo);
-        console.mensagemSucesso("=== JOGO COM ID: " + proximoIdJogo + " CRIADO COM SUCESSO! ===");
         this.jogos.add(jogo);
         proximoIdJogo++;
     }
@@ -37,7 +34,7 @@ public class ServicoVenda {
                 return jogo;
             }
         }
-        throw new ItemNaoEncontradoException("Erro: Jogo não encontrado");
+        throw new ItemNaoEncontradoException("=== ERRO: JOGO NAO ENCONTRADO ===");
     }
 
     public void realizarVenda(int idUsuario, int idJogo) {
@@ -52,7 +49,6 @@ public class ServicoVenda {
         venda.setIdVenda(vendas.size() + 1);
         vendas.add(venda);
 
-        console.mensagemSucesso("=== VENDA REALIZADA COM SUCESSO! ===");
     }
 
     public void listarVendas() {

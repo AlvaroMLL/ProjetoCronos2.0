@@ -46,26 +46,26 @@ public class ItemCadastro {
                     LivroFisico livroFisico = new LivroFisico();
 
                     System.out.println("=== CADASTRO DE LIVRO FISICO ===");
-                    System.out.println("\nDigite o Titulo Do Livro Fisico: ");
+                    System.out.print("\nDigite o Titulo Do Livro Fisico: ");
                     String tituloLivro = console.nextLine();
 
-                    System.out.println("\nDigite o Autor Do Livro Fisico: ");
+                    System.out.print("\nDigite o Autor Do Livro Fisico: ");
                     String autorLivro = console.nextLine();
 
-                    System.out.println("\nDigite o ISBN Do Livro Fisico: ");
+                    System.out.print("\nDigite o ISBN Do Livro Fisico: ");
                     String isbnLivro = console.nextLine();
 
-                    // System.out.println("\nDigite a Editora Do Livro Fisico: ");
+                    // System.out.print("\nDigite a Editora Do Livro Fisico: ");
                     // String editoraLivro = console.nextLine(); REFAZER ISSO APOS AQUILO
 
-                    System.out.println("\nDigite o Ano De Publicacao Do Livro Fisico: ");
+                    System.out.print("\nDigite o Ano De Publicacao Do Livro Fisico: ");
                     int anoDePublicacaoLivro = console.nextInt();
 
-                    System.out.println("\nDigite a Edicao Do Livro Fisico: ");
+                    System.out.print("\nDigite a Edicao Do Livro Fisico: ");
                     String edicaoLivro = console.nextLine();
 
-                    System.out.println("Escolha o Genero Literario Do Livro: ");
                     System.out.println("1 - Ficcao Cientifica | 2 - Romance | 3 - Terror | 4 - Biografia | 5 - Outro");
+                    System.out.print("Escolha o Genero Literario Do Livro: ");
                     int opcaoGenero = console.nextInt();
                     switch (opcaoGenero) {
                         case 1:
@@ -88,21 +88,22 @@ public class ItemCadastro {
                             break;
                     }
 
-                    System.out.println("\nDigite a Sinopse do Livro Fisico: ");
+                    System.out.print("\nDigite a Sinopse do Livro Fisico: ");
                     String sinopseLivro = console.nextLine();
 
-                    System.out.println("\nDigite o Numero De Paginas Do Livro Fisico: ");
+                    System.out.print("\nDigite o Numero De Paginas Do Livro Fisico: ");
                     int numeroDePaginas = console.nextInt();
 
                     livroFisico.setTitulo(tituloLivro);
                     livroFisico.setAutor(autorLivro);
                     livroFisico.setIsbn(isbnLivro);
-                    livroFisico.setEditora();
+                    // livroFisico.setEditora();
                     livroFisico.setAnoDePublicacao(anoDePublicacaoLivro);
                     livroFisico.setEdicao(edicaoLivro);
                     livroFisico.setSinopse(sinopseLivro);
                     livroFisico.setNumeroDePaginas(numeroDePaginas);
                     servicoItem.adicionarItem(livroFisico);
+                    console.mensagemSucesso("LIVRO FISICO CADASTRADO COM SUCESSO" + livroFisico.getId());
                     console.pause();
 
                     break;
@@ -110,26 +111,26 @@ public class ItemCadastro {
                     AudioLivro audiolivro = new AudioLivro();
 
                     System.out.println("=== CADASTRO DE AUDIOLIVRO ===");
-                    System.out.println("\nDigite o Titulo Do Audiolivro: ");
+                    System.out.print("\nDigite o Titulo Do Audiolivro: ");
                     String tituloAudiolivro = console.nextLine();
 
-                    System.out.println("\nDigite o Autor Do Audiolivro: ");
+                    System.out.print("\nDigite o Autor Do Audiolivro: ");
                     String autorAudiolivro = console.nextLine();
 
-                    System.out.println("\nDigite o ISBN Do Audiolivro: ");
+                    System.out.print("\nDigite o ISBN Do Audiolivro: ");
                     String isbnAudiolivro = console.nextLine();
 
-                    // System.out.println("\nDigite a Editora Do Audiolivro: ");
+                    // System.out.print("\nDigite a Editora Do Audiolivro: ");
                     // String editoraAudiolivro = console.nextLine(); REFAZER ISSO APOS AQUILO
 
-                    System.out.println("\nDigite o Ano De Publicacao Do Audiolivro: ");
+                    System.out.print("\nDigite o Ano De Publicacao Do Audiolivro: ");
                     int anoDePublicacaoAudiolivro = console.nextInt();
 
-                    System.out.println("\nDigite a Edicao Do Audiolivro: ");
+                    System.out.print("\nDigite a Edicao Do Audiolivro: ");
                     String edicaoAudiolivro = console.nextLine();
 
                     System.out.println("1 - Ficcao Cientifica | 2 - Romance | 3 - Terror | 4 - Biografia | 5 - Outro");
-                    System.out.println("\nEscolha o Genero Literario Do Livro: ");
+                    System.out.print("\nEscolha o Genero Literario Do Livro: ");
                     int opcaoGeneroAudiolivro = console.nextInt();
                     switch (opcaoGeneroAudiolivro) {
                         case 1:
@@ -153,45 +154,46 @@ public class ItemCadastro {
                             break;
                     }
 
-                    System.out.println("\nDigite a Sinopse do Livro Fisico: ");
+                    System.out.print("\nDigite a Sinopse do Livro Fisico: ");
                     String sinopseAudiolivro = console.nextLine();
 
-                    System.out.println("\nDigite a Duracao Em Minutos Do Audiolivro: ");
+                    System.out.print("\nDigite a Duracao Em Minutos Do Audiolivro: ");
                     int duracaoAudiolivro = console.nextInt();
 
                     audiolivro.setTitulo(tituloAudiolivro);
                     audiolivro.setAutor(autorAudiolivro);
                     audiolivro.setIsbn(isbnAudiolivro);
-                    audiolivro.setEditora();
+                    // audiolivro.setEditora();
                     audiolivro.setAnoDePublicacao(anoDePublicacaoAudiolivro);
                     audiolivro.setEdicao(edicaoAudiolivro);
                     audiolivro.setSinopse(sinopseAudiolivro);
                     audiolivro.setDuracaoMinutos(duracaoAudiolivro);
                     servicoItem.adicionarItem(audiolivro);
+                    console.mensagemSucesso("AUDIOLIVRO CADASTRADO COM SUCESSO" + audiolivro.getId());
                     console.pause();
 
                     break;
                 case 3:
                     System.out.println("=== CADASTRO DE REVISTA ===");
-                    System.out.println("\nDigite o Titulo Da Revista: ");
+                    System.out.print("\nDigite o Titulo Da Revista: ");
                     String tituloRevista = console.nextLine();
 
-                    System.out.println("\nDigite o Autor Da Revista: ");
+                    System.out.print("\nDigite o Autor Da Revista: ");
                     String autorRevista = console.nextLine();
 
-                    System.out.println("\nDigite ISSN Da Revista: ");
+                    System.out.print("\nDigite ISSN Da Revista: ");
                     String issnRevista = console.nextLine();
 
-                    System.out.println("\nDigite o Volume Da Revista: ");
+                    System.out.print("\nDigite o Volume Da Revista: ");
                     String volumeRevista = console.nextLine();
 
-                    System.out.println("\nDigite o Numero Da Revista: ");
+                    System.out.print("\nDigite o Numero Da Revista: ");
                     int numeroRevista = console.nextInt();
 
-                    System.out.println("\nDigite a Editora Da Revista");
+                    System.out.print("\nDigite a Editora Da Revista");
                     String editoraRevista = console.nextLine();
 
-                    System.out.println("\nDigite a Data Da Publicacao Da Revista No Formato dd/MM/aaaa: ");
+                    System.out.print("\nDigite a Data Da Publicacao Da Revista No Formato dd/MM/aaaa: ");
                     String dataPubliRevista = console.nextLine();
 
                     Revista revista = new Revista();
@@ -201,21 +203,22 @@ public class ItemCadastro {
                     revista.setIssn(issnRevista);
                     revista.setVolume(volumeRevista);
                     revista.setNumero(numeroRevista);
-                    revista.setEditora(editoraRevista);
+                    // revista.setEditora(editoraRevista);
                     revista.setDataDePublicacaoString(dataPubliRevista);
                     servicoItem.adicionarItem(revista);
+                    console.mensagemSucesso("REVISTA CADASTRADA COM SUCESSO" + revista.getId());
                     console.pause();
 
                     break;
                 case 4:
                     System.out.println("=== CADASTRO DE CD ===");
-                    System.out.println("\nDigite o Titulo Do Cd: ");
+                    System.out.print("\nDigite o Titulo Do Cd: ");
                     String tituloCd = console.nextLine();
 
-                    System.out.println("\nDigite o Artista Do Cd: ");
+                    System.out.print("\nDigite o Artista Do Cd: ");
                     String artistaCd = console.nextLine();
 
-                    System.out.println("\nDigite a Quantidade De Faixas Do Cd: ");
+                    System.out.print("\nDigite a Quantidade De Faixas Do Cd: ");
                     int qtdFaixas = Integer.parseInt(console.nextLine());
                     String[] faixaInformadas = new String[qtdFaixas];
 
@@ -229,6 +232,7 @@ public class ItemCadastro {
                     cd.setTitulo(tituloCd);
                     cd.setAutor(artistaCd);
                     cd.setListaDeFaixas(faixaInformadas);
+                    console.mensagemSucesso("CD CADASTRADO COM SUCESSO" + cd.getId());
                     console.pause();
 
                     break;
@@ -236,18 +240,18 @@ public class ItemCadastro {
                     Jogo jogo = new Jogo();
 
                     System.out.println("=== CADASTRO DE JOGO ===");
-                    System.out.println("\nDigite o Nome Do Jogo: ");
+                    System.out.print("\nDigite o Nome Do Jogo: ");
                     String NomeJogo = console.nextLine();
 
-                    System.out.println("\nDigite a Quantidade De Pecas Do Jogo: ");
+                    System.out.print("\nDigite a Quantidade De Pecas Do Jogo: ");
                     int qtdPecas = console.nextInt();
 
-                    System.out.println("\nDigite o Preco Do Jogo (So os numeros): ");
+                    System.out.print("\nDigite o Preco Do Jogo (So os numeros): ");
                     String precoString = console.nextLine();
                     BigDecimal preco = new BigDecimal(precoString);
 
-                    System.out.println("1 - Tabuleiro | 2 - Cartas");
-                    System.out.println("\nEscolha Qual o Tipo Do Jogo: ");
+                    System.out.print("1 - Tabuleiro | 2 - Cartas");
+                    System.out.print("\nEscolha Qual o Tipo Do Jogo: ");
                     int tipoJogo = console.nextInt();
 
                     switch (tipoJogo) {
@@ -269,6 +273,7 @@ public class ItemCadastro {
                     jogo.setQtdPecas(qtdPecas);
                     jogo.setPreco(preco);
                     servicoVenda.cadastrarJogo(jogo);
+                    console.mensagemSucesso("JOGO CADASTRADO COM SUCESSO" + jogo.getIdJogo());
                     console.pause();
 
                     break;

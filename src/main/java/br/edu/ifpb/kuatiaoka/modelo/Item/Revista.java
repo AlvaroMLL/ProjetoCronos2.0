@@ -13,4 +13,5 @@ public class Revista extends Item implements Emprestavel{
     private int numero;
     private Editora editora;
     private String dataDePublicacaoString;
+    private int numeroDePaginas;
 }

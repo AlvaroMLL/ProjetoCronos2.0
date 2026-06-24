@@ -11,9 +11,14 @@ public class Console {
     }
 
     public int nextInt() {
-        int valor = scanner.nextInt();
-        scanner.nextLine();
-        return valor;
+        while (true) {
+            try {
+                System.out.print("\nDigite Uma Opcao: ");
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                mensagemErro("=== ERRO: DIGITE APENAS NUMEROS ===");
+            }
+        }
     }
 
     public String nextLine() {

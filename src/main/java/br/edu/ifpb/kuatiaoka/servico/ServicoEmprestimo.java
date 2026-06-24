@@ -1,5 +1,6 @@
 package br.edu.ifpb.kuatiaoka.servico;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -14,32 +15,30 @@ import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusEmprestimo;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
-import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 
 public class ServicoEmprestimo {
     private ServicoUsuario servicoUsuario;
     private ServicoItem servicoItem;
     private ArrayList<Emprestimo> emprestimos = new ArrayList<>();
-    private Console console;
 
     public void realizarEmprestimo(int idUsuario, int idItem) {
         Usuario usuarioAchado = servicoUsuario.buscarUsuarioPorId(idUsuario);
         Item itemAchado = servicoItem.buscarItemPorId(idItem);
 
         if (itemAchado.getStatusItem() != StatusItem.DISPONIVEL) {
-            throw new ItemIndisponivelException("Erro: Item indisponível");
+            throw new ItemIndisponivelException("=== ERRO: ITEM INDISPONIVEL ===");
         }
         if (temEmprestimoEmAtraso(usuarioAchado)) {
-            throw new EmprestimoEmAtrasoException("Erro: Emprestimo atrasado");
+            throw new EmprestimoEmAtrasoException("=== ERRO: EMPRESTIMO ATRASADO ===");
         }
 
         int totalAtivos = contarEmprestimosAtivos(usuarioAchado);
 
         if (!usuarioAchado.isRegularizado()) {
-            throw new UsuarioNaoRegularizadoException("Erro: Usuario não regularizado");
+            throw new UsuarioNaoRegularizadoException("=== ERRO: USUARIO NAO REGULARIZADO ===");
         }
         if (totalAtivos >= usuarioAchado.getLimiteEmprestimos()) {
-            throw new LimiteEmprestimosException("Erro: Limite de emprestimos atingido");
+            throw new LimiteEmprestimosException("=== ERRO: LIMITE DE EMPRESTIMOS ATINGIDO ===");
         }
 
         Emprestimo emprestimo = new Emprestimo();
@@ -54,8 +53,6 @@ public class ServicoEmprestimo {
 
         itemAchado.setStatusItem(StatusItem.EMPRESTADO);
         emprestimos.add(emprestimo);
-
-        console.mensagemSucesso("=== EMPRESTIMO REALIZADO COM SUCESSO! ===");
     }
 
     public int contarEmprestimosAtivos(Usuario usuario) {
@@ -73,7 +70,7 @@ public class ServicoEmprestimo {
     public void registrarDevolucao(int idEmprestimo) {
         Emprestimo emprestimoBuscado = buscarEmprestimoPorId(idEmprestimo);
         if (emprestimoBuscado.getStatus() == StatusEmprestimo.DEVOLVIDO) {
-            throw new EmprestimoFinalizadoException("Erro: Emprestimo já finalizado");
+            throw new EmprestimoFinalizadoException("=== ERRO: EMPRESTIMO JA FINALIZADO ===");
         }
         emprestimoBuscado.setDataDevolucao(LocalDate.now());
         if (emprestimoBuscado.getDataPrevista().isBefore(emprestimoBuscado.getDataDevolucao())) {
@@ -82,11 +79,11 @@ public class ServicoEmprestimo {
             double multaTotal = diasAtraso * emprestimoBuscado.getUsuario().getMultaDiaria();
             emprestimoBuscado.getUsuario().setRegularizado(false);
             emprestimoBuscado.getUsuario().setMultaPendente(multaTotal);
+            emprestimoBuscado.setValorMulta(BigDecimal.valueOf(multaTotal));
             System.out.println("Multa de R$ " + multaTotal + " aplicada por " + diasAtraso + " dias de atraso.");
         }
         emprestimoBuscado.setStatus(StatusEmprestimo.DEVOLVIDO);
         emprestimoBuscado.getItemEmprestado().setStatusItem(StatusItem.DISPONIVEL);
-        console.mensagemSucesso("=== DEVOLUCAO REALIZADA COM SUCESSO! ===");
     }
 
     public boolean temEmprestimoEmAtraso(Usuario usuario) {
@@ -136,7 +133,7 @@ public class ServicoEmprestimo {
                 return emprestimo;
             }
         }
-        throw new EmprestimoNaoEncontradoExcepiton("Erro: Emprestimo não encontrado");
+        throw new EmprestimoNaoEncontradoExcepiton("=== ERRO: EMPRESTIMO NAO ENCONTRADO ===");
     }
 
     public ArrayList<Emprestimo> listarHistoricoPorItem(int idItem) {
@@ -148,5 +145,15 @@ public class ServicoEmprestimo {
             }
         }
         return resultado;
+    }
+
+    public void listarEmprestimos() {
+        for (Emprestimo emprestimo : emprestimos) {
+            System.out.println("ID: " + emprestimo.getIdDoEmprestimo() +
+                    "\nNome Do Comprador: " + emprestimo.getUsuario().getNome() +
+                    "\nData De Devolucao: " + emprestimo.getDataDevolucao() +
+                    "\nValor Multa: " + emprestimo.getValorMulta()  +
+                    "\nStatus Do Emprestimo: " + emprestimo.getStatus());
+        }
     }
 }

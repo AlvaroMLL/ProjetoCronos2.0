@@ -30,6 +30,7 @@ public class MainUi {
         System.out.println("2 - Ir Para o Menu De Itens");
         System.out.println("3 - Ir Para o Menu De Emprestimos");
         System.out.println("4 - Ir Para o Menu De Vendas");
+        System.out.println("5 - Ir Para o Menu De Editoras");
         System.out.println("0 - Encerrar Programa");
     }
 
@@ -43,7 +44,7 @@ public class MainUi {
         do {
             ebixirMenu();
 
-            System.out.println("\nEscolha Uma Opcao: ");
+            System.out.print("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
 
             switch (opcao) {
@@ -62,6 +63,8 @@ public class MainUi {
                 case 4:
                     vendaMenu.executar();
 
+                    break;
+                case 5:
                     break;
                 case 0:
                     System.out.println("Encerrando Programa...");

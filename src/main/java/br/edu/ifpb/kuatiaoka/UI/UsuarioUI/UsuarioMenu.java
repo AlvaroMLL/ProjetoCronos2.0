@@ -2,6 +2,7 @@ package br.edu.ifpb.kuatiaoka.UI.UsuarioUI;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 import br.edu.ifpb.kuatiaoka.excecao.MultaInexistenteException;
+import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.servico.ServicoUsuario;
 import lombok.Data;
 
@@ -32,7 +33,7 @@ public class UsuarioMenu {
         do {
             exibirMenuUsuario();
 
-            System.out.println("\nEscolha Uma Opcao: ");
+            System.out.print("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
 
             switch (opcao) {
@@ -52,14 +53,18 @@ public class UsuarioMenu {
                 case 4:
                     System.out.println("=== PAGANDO MULTA DE USUARIO ===");
                     servicoUsuario.listarUsuarios();
-                    System.out.println("\nDigite o ID Do Usuario Que Tera a Multa Paga: ");
+                    System.out.print("\nDigite o ID Do Usuario Que Tera a Multa Paga: ");
                     int idUsuario = console.nextInt();
 
                     try {
                         servicoUsuario.pagarMulta(idUsuario);
+                        console.mensagemSucesso("=== PAGAMENTO FEITO COM SUCESSO ===");
                         console.pause();
                     } catch (MultaInexistenteException e) {
                         console.mensagemErro(e.getMessage());
+                        console.pause();
+                    } catch (UsuarioNaoEncontradoException ex) {
+                        console.mensagemErro(ex.getMessage());
                         console.pause();
                     }
 

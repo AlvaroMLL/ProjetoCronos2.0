@@ -1,5 +1,6 @@
 package br.edu.ifpb.kuatiaoka.modelo.Emprestimo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusEmprestimo;
@@ -15,5 +16,6 @@ public class Emprestimo {
     private int idDoEmprestimo;
     private Item itemEmprestado;
     private Usuario usuario;
+    private BigDecimal valorMulta;
     private StatusEmprestimo status = StatusEmprestimo.EM_ABERTO;
 }

@@ -36,22 +36,23 @@ public class EmprestimoMenu {
         do {
             exibirMenuEmprestimo();
 
-            System.out.println("\nEscolha Uma Opcao: ");
+            System.out.print("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
 
             switch (opcao) {
                 case 1:
                     System.out.println("=== REALIZANDO UM EMPRESTIMO ===");
                     servicoItem.listarItensDisponiveis();
-                    System.out.println("\nDigite o ID Do Item Que Será Emprestado: ");
+                    System.out.print("\nDigite o ID Do Item Que Será Emprestado: ");
                     int idItem = console.nextInt();
 
                     servicoUsuario.listarUsuarios();
-                    System.out.println("\nDigite o ID Do Usuario Que Vai Pegar o Item: ");
+                    System.out.print("\nDigite o ID Do Usuario Que Vai Pegar o Item: ");
                     int idUsuario = console.nextInt();
 
                     try {
                         servicoEmprestimo.realizarEmprestimo(idUsuario, idItem);
+                        console.mensagemSucesso("=== EMPRESTIMO REALIZADO COM SUCESSO ===");
                         console.pause();
                     } catch (ItemIndisponivelException e) {
                         console.mensagemErro(e.getMessage());
@@ -71,15 +72,16 @@ public class EmprestimoMenu {
                 case 2:
                     System.out.println("=== REGISTRANDO UMA DEVOLUCAO ===");
                     servicoUsuario.listarUsuarios();
-                    System.out.println("\nDigite o Id Do Usuario Que Fara a Devolucao: ");
+                    System.out.print("\nDigite o Id Do Usuario Que Fara a Devolucao: ");
                     int idUsuarioDevolucao = console.nextInt();
 
                     servicoEmprestimo.listarEmprestimosPorUsuario(idUsuarioDevolucao);
 
-                    System.out.println("\nDigite o ID Do Emprestimo a Ser Devolvido: ");
+                    System.out.print("\nDigite o ID Do Emprestimo a Ser Devolvido: ");
                     int idEmprestimo = console.nextInt();
                     try {
                         servicoEmprestimo.registrarDevolucao(idEmprestimo);
+                        console.mensagemSucesso("=== DEVOLUCAO REGISTRADA COM SUCESSO ===");
                         console.pause();
                     } catch (EmprestimoFinalizadoException e) {
                         console.mensagemErro(e.getMessage());
@@ -90,7 +92,7 @@ public class EmprestimoMenu {
                 case 3:
                     System.out.println("=== HISTORICO DE EMPRESTIMO DO USUARIO ===");
                     servicoUsuario.listarUsuarios();
-                    System.out.println("\nDigite o Id Do Usuario Que Tera Os Emprestimos Listados: ");
+                    System.out.print("\nDigite o Id Do Usuario Que Tera Os Emprestimos Listados: ");
                     int idUsuarioEmprestimo = console.nextInt();
                     servicoEmprestimo.listarEmprestimosPorUsuario(idUsuarioEmprestimo);
                     console.pause();
@@ -99,7 +101,7 @@ public class EmprestimoMenu {
                 case 4:
                     System.out.println("=== HISTORICO DE EMPRESTIMOS DO ITEM ===");
                     servicoItem.listarItens();
-                    System.out.println("\nDigite o Id Do Item Que Tera Os Emprestimos Listados: ");
+                    System.out.print("\nDigite o Id Do Item Que Tera Os Emprestimos Listados: ");
                     int idItemEmprestimo = console.nextInt();
                     servicoEmprestimo.listarHistoricoPorItem(idItemEmprestimo);
                     console.pause();
