@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Cd extends Item {
-    private String listaDeFaixas;
+    private String[] listaDeFaixas;
     // private String artista; Vou usar "autores" como artista
 }

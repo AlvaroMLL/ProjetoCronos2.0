@@ -8,8 +8,7 @@ import lombok.Data;
 @Data
 public abstract class Item {
     private String titulo;
-    private List<String> autores;
+    private String autor;
     private int id;
     private StatusItem statusItem = StatusItem.DISPONIVEL;
-
 }

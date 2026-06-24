@@ -12,8 +12,15 @@ public class ServicoVenda {
     private ArrayList<Jogo> jogos = new ArrayList<>();
     private ArrayList<Venda> vendas = new ArrayList<>();
     private ServicoUsuario servicoUsuario;
+    private int proximoIdJogo = 1;
+
+    public int proximoIdJogo() {
+        return proximoIdJogo;
+    }
 
     public void cadastrarJogo(Jogo jogo) {
+        jogo.setIdJogo(proximoIdJogo);
+        proximoIdJogo++;
         this.jogos.add(jogo);
     }
 

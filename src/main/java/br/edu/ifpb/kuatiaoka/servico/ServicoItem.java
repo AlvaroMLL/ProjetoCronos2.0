@@ -13,6 +13,8 @@ public class ServicoItem {
     private ArrayList<Item> itens = new ArrayList<>();
 
     public void adicionarItem(Item item) {
+        item.setId(proximoIdItem);
+        proximoIdItem++;
         this.itens.add(item);
     }
 
@@ -50,13 +52,8 @@ public class ServicoItem {
     public ArrayList<Item> buscarItemPorAutor(String autorBuscado) {
         ArrayList<Item> resultado = new ArrayList<>();
         for (Item item : itens) {
-            if (item.getAutores() != null) {
-                for (String autor : item.getAutores()) {
-                    if (autor.equalsIgnoreCase(autorBuscado)) {
-                        resultado.add(item);
-                        break;
-                    }
-                }
+            if (item.getAutor() == autorBuscado) {
+                resultado.add(item);
             }
         }
         return resultado;
