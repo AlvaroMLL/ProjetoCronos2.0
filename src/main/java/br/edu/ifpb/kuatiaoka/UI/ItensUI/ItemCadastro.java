@@ -221,7 +221,7 @@ public class ItemCadastro {
                     break;
                 default:
                     console.mensagemErro("=== OPCAO INVALIDA ===");
-
+                    console.pause();
             }
         } while (opcao != 0);
     }

@@ -109,7 +109,7 @@ public class EmprestimoMenu {
                     break;
                 default:
                     console.mensagemErro("=== OPCAO INVALIDA ===");
-
+                    console.pause();
             }
         } while (opcao != 0);
     }

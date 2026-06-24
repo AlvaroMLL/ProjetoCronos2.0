@@ -47,15 +47,15 @@ public class VendaMenu {
                     break;
                 case 2:
                     System.out.println("=== LISTANDO HISTORICO DE VENDAS ===");
-                        servicoVenda.listarVendas();
-                        console.pause();
+                    servicoVenda.listarVendas();
+                    console.pause();
 
                     break;
                 case 0:
                     break;
                 default:
                     console.mensagemErro("=== OPCAO INVALIDA ===");
-
+                    console.pause();
             }
         } while (opcao != 0);
     }

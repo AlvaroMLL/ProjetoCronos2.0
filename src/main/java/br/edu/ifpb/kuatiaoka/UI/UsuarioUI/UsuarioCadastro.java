@@ -90,6 +90,7 @@ public class UsuarioCadastro {
                     break;
                 default:
                     console.mensagemErro("=== OPCAO INVALIDA ===");
+                    console.pause();
             }
         } while (opcao != 0);
     }
