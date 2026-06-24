@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import br.edu.ifpb.kuatiaoka.excecao.EditoraNaoEncontradaException;
 import br.edu.ifpb.kuatiaoka.modelo.Editora.Editora;
-import br.edu.ifpb.kuatiaoka.modelo.Emprestimo.Emprestimo;
 
 public class ServicoEditora {
 
@@ -16,7 +15,7 @@ public class ServicoEditora {
         editoras.add(editora);
     }
 
-    public Editora buscarPorId(int id) {
+    public Editora buscarEditoraPorId(int id) {
         for (Editora editora : editoras) {
             if (editora.getId() == id) {
                 return editora;
@@ -27,6 +26,7 @@ public class ServicoEditora {
 
     public void listarEditoras() {
         for (Editora editora : editoras) {
+            System.out.println("====================================");
             System.out.println("ID: " + editora.getId() +
                     "\nNome Da Editora: " + editora.getNome() +
                     "\nCnpj Da Editora: " + editora.getCnpj());

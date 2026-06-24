@@ -2,9 +2,11 @@ package br.edu.ifpb.kuatiaoka.UI;
 
 import br.edu.ifpb.kuatiaoka.UI.ComercioUi.EmprestimoMenu;
 import br.edu.ifpb.kuatiaoka.UI.ComercioUi.VendaMenu;
+import br.edu.ifpb.kuatiaoka.UI.EditoraUi.EditoraMenu;
 import br.edu.ifpb.kuatiaoka.UI.ItensUI.ItemMenu;
 import br.edu.ifpb.kuatiaoka.UI.UsuarioUI.UsuarioMenu;
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.servico.ServicoEditora;
 import br.edu.ifpb.kuatiaoka.servico.ServicoEmprestimo;
 import br.edu.ifpb.kuatiaoka.servico.ServicoItem;
 import br.edu.ifpb.kuatiaoka.servico.ServicoUsuario;
@@ -15,6 +17,7 @@ public class MainUi {
     private ServicoItem servicoItem;
     private ServicoEmprestimo servicoEmprestimo;
     private ServicoVenda servicoVenda;
+    private ServicoEditora servicoEditora;
     private Console console = new Console();
 
     public MainUi() {
@@ -22,6 +25,7 @@ public class MainUi {
         this.servicoItem = new ServicoItem();
         this.servicoEmprestimo = new ServicoEmprestimo();
         this.servicoVenda = new ServicoVenda();
+        this.servicoEditora = new ServicoEditora();
     }
 
     public void ebixirMenu() {
@@ -37,9 +41,10 @@ public class MainUi {
     public void executar() {
         int opcao = -1;
         UsuarioMenu usuarioMenu = new UsuarioMenu(servicoUsuario);
-        ItemMenu itemMenu = new ItemMenu(servicoItem, servicoVenda);
+        ItemMenu itemMenu = new ItemMenu(servicoItem, servicoVenda, servicoEditora);
         EmprestimoMenu emprestimoMenu = new EmprestimoMenu(servicoEmprestimo, servicoItem, servicoUsuario);
         VendaMenu vendaMenu = new VendaMenu(servicoVenda, servicoUsuario);
+        EditoraMenu editoraMenu = new EditoraMenu(servicoEditora);
 
         do {
             ebixirMenu();
@@ -65,6 +70,7 @@ public class MainUi {
 
                     break;
                 case 5:
+                    editoraMenu.executar();
                     break;
                 case 0:
                     System.out.println("Encerrando Programa...");

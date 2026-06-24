@@ -3,6 +3,7 @@ package br.edu.ifpb.kuatiaoka.UI.ItensUI;
 import java.math.BigDecimal;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.modelo.Editora.Editora;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.GeneroLiterario;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.TipoJogo;
 import br.edu.ifpb.kuatiaoka.modelo.Item.AudioLivro;
@@ -10,6 +11,7 @@ import br.edu.ifpb.kuatiaoka.modelo.Item.Cd;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Jogo;
 import br.edu.ifpb.kuatiaoka.modelo.Item.LivroFisico;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Revista;
+import br.edu.ifpb.kuatiaoka.servico.ServicoEditora;
 import br.edu.ifpb.kuatiaoka.servico.ServicoItem;
 import br.edu.ifpb.kuatiaoka.servico.ServicoVenda;
 
@@ -17,10 +19,12 @@ public class ItemCadastro {
     private Console console = new Console();
     private ServicoItem servicoItem;
     private ServicoVenda servicoVenda;
+    private ServicoEditora servicoEditora;
 
-    public ItemCadastro(ServicoItem servicoItem, ServicoVenda servicoVenda) {
+    public ItemCadastro(ServicoItem servicoItem, ServicoVenda servicoVenda, ServicoEditora servicoEditora) {
         this.servicoItem = servicoItem;
         this.servicoVenda = servicoVenda;
+        this.servicoEditora = servicoEditora;
     }
 
     public void exibirCadastroItens() {
@@ -55,8 +59,11 @@ public class ItemCadastro {
                     System.out.print("\nDigite o ISBN Do Livro Fisico: ");
                     String isbnLivro = console.nextLine();
 
-                    // System.out.print("\nDigite a Editora Do Livro Fisico: ");
-                    // String editoraLivro = console.nextLine(); REFAZER ISSO APOS AQUILO
+                    servicoEditora.listarEditoras();
+                    System.out.print("\nDigite o ID da Editora Do Livro Fisico: ");
+                    int idEditoraLivro = console.nextInt();
+
+                    Editora editora = servicoEditora.buscarEditoraPorId(idEditoraLivro);
 
                     System.out.print("\nDigite o Ano De Publicacao Do Livro Fisico: ");
                     int anoDePublicacaoLivro = console.nextInt();
@@ -97,7 +104,7 @@ public class ItemCadastro {
                     livroFisico.setTitulo(tituloLivro);
                     livroFisico.setAutor(autorLivro);
                     livroFisico.setIsbn(isbnLivro);
-                    // livroFisico.setEditora();
+                    livroFisico.setEditora(editora);
                     livroFisico.setAnoDePublicacao(anoDePublicacaoLivro);
                     livroFisico.setEdicao(edicaoLivro);
                     livroFisico.setSinopse(sinopseLivro);
@@ -120,8 +127,11 @@ public class ItemCadastro {
                     System.out.print("\nDigite o ISBN Do Audiolivro: ");
                     String isbnAudiolivro = console.nextLine();
 
-                    // System.out.print("\nDigite a Editora Do Audiolivro: ");
-                    // String editoraAudiolivro = console.nextLine(); REFAZER ISSO APOS AQUILO
+                    servicoEditora.listarEditoras();
+                    System.out.print("\nDigite o ID da Editora Do Livro Fisico: ");
+                    int idEditoraAudiolivro = console.nextInt();
+
+                    Editora editoraAudiolivro = servicoEditora.buscarEditoraPorId(idEditoraAudiolivro);
 
                     System.out.print("\nDigite o Ano De Publicacao Do Audiolivro: ");
                     int anoDePublicacaoAudiolivro = console.nextInt();
@@ -163,7 +173,7 @@ public class ItemCadastro {
                     audiolivro.setTitulo(tituloAudiolivro);
                     audiolivro.setAutor(autorAudiolivro);
                     audiolivro.setIsbn(isbnAudiolivro);
-                    // audiolivro.setEditora();
+                    audiolivro.setEditora(editoraAudiolivro);
                     audiolivro.setAnoDePublicacao(anoDePublicacaoAudiolivro);
                     audiolivro.setEdicao(edicaoAudiolivro);
                     audiolivro.setSinopse(sinopseAudiolivro);
@@ -190,8 +200,11 @@ public class ItemCadastro {
                     System.out.print("\nDigite o Numero Da Revista: ");
                     int numeroRevista = console.nextInt();
 
-                    System.out.print("\nDigite a Editora Da Revista");
-                    String editoraRevista = console.nextLine();
+                    servicoEditora.listarEditoras();
+                    System.out.print("\nDigite o ID da Editora Do Livro Fisico: ");
+                    int idEditoraRevista = console.nextInt();
+
+                    Editora editoraRevista = servicoEditora.buscarEditoraPorId(idEditoraRevista);
 
                     System.out.print("\nDigite a Data Da Publicacao Da Revista No Formato dd/MM/aaaa: ");
                     String dataPubliRevista = console.nextLine();
@@ -203,7 +216,7 @@ public class ItemCadastro {
                     revista.setIssn(issnRevista);
                     revista.setVolume(volumeRevista);
                     revista.setNumero(numeroRevista);
-                    // revista.setEditora(editoraRevista);
+                    revista.setEditora(editoraRevista);
                     revista.setDataDePublicacaoString(dataPubliRevista);
                     servicoItem.adicionarItem(revista);
                     console.mensagemSucesso("REVISTA CADASTRADA COM SUCESSO" + revista.getId());
