@@ -1,6 +1,6 @@
 package br.edu.ifpb.kuatiaoka.modelo.Usuario;
 
-import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
+import br.edu.ifpb.kuatiaoka.modelo.Interface.Emprestavel;
 
 public class Administrativo extends Usuario {
     // Pode pegar até 2 itens simultaneamente por ate 10 dias, multa de 1.50R$ por
@@ -20,7 +20,7 @@ public class Administrativo extends Usuario {
     }
 
     @Override
-    public int calcularPrazo(Item item) {
+    public int calcularPrazo(Emprestavel item) {
         return PRAZO_EMPRESTIMO;
     }
 }

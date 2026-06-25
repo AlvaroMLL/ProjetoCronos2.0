@@ -2,6 +2,7 @@ package br.edu.ifpb.kuatiaoka.UI.ItensUI;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
 import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
+import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
 import br.edu.ifpb.kuatiaoka.servico.ServicoItem;
 
 public class ItemBusca {
@@ -29,7 +30,7 @@ public class ItemBusca {
         do {
             exibirBuscaItem();
 
-            System.out.println("\nEscolha Uma Opcao: ");
+            System.out.print("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
 
             switch (opcao) {
@@ -38,7 +39,9 @@ public class ItemBusca {
                     System.out.print("\nDigite o Titulo Do Item: ");
                     String titulo = console.nextLine();
 
-                    servicoItem.buscarItemPorTitulo(titulo);
+                    for (Item item : servicoItem.buscarItemPorTitulo(titulo)) {
+                        System.out.println(item);
+                    }
                     console.pause();
 
                     break;
@@ -48,7 +51,7 @@ public class ItemBusca {
                     int id = console.nextInt();
 
                     try {
-                        servicoItem.buscarItemPorId(id);
+                        System.out.println(servicoItem.buscarItemPorId(id));
                         console.pause();
                     } catch (ItemNaoEncontradoException e) {
                         console.mensagemErro(e.getMessage());
@@ -61,7 +64,9 @@ public class ItemBusca {
                     System.out.print("\nDigite o Editora Do Item: ");
                     String editora = console.nextLine();
 
-                    servicoItem.buscarLivroPorEditora(editora);
+                    for (Item item : servicoItem.buscarItemPorEditora(editora)) {
+                        System.out.println(item);
+                    }
                     console.pause();
 
                     break;
@@ -70,7 +75,9 @@ public class ItemBusca {
                     System.out.print("\nDigite o Autor Do Item: ");
                     String autor = console.nextLine();
 
-                    servicoItem.buscarItemPorAutor(autor);
+                    for (Item item : servicoItem.buscarItemPorAutor(autor)) {
+                        System.out.println(item);
+                    }
                     console.pause();
 
                     break;
@@ -80,7 +87,7 @@ public class ItemBusca {
                     String isbn = console.nextLine();
 
                     try {
-                        servicoItem.buscarLivroPorIsbn(isbn);
+                        System.out.println(servicoItem.buscarLivroPorIsbn(isbn));
                         console.pause();
                     } catch (ItemNaoEncontradoException e) {
                         console.mensagemErro(e.getMessage());
@@ -94,7 +101,7 @@ public class ItemBusca {
                     String issn = console.nextLine();
 
                     try {
-                        servicoItem.buscarRevistaPorIssn(issn);
+                        System.out.println(servicoItem.buscarRevistaPorIssn(issn));
                         console.pause();
                     } catch (ItemNaoEncontradoException e) {
                         console.mensagemErro(e.getMessage());

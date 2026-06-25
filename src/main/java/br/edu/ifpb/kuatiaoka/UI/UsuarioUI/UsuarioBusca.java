@@ -44,7 +44,7 @@ public class UsuarioBusca {
                     int idBuscado = console.nextInt();
 
                     try {
-                        servicoUsuario.buscarUsuarioPorId(idBuscado);
+                        System.out.println(servicoUsuario.buscarUsuarioPorId(idBuscado));
                         console.pause();
                     } catch (UsuarioNaoEncontradoException e) {
                         console.mensagemErro(e.getMessage());

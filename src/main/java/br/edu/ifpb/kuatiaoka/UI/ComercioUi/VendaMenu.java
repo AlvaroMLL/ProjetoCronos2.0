@@ -1,6 +1,8 @@
 package br.edu.ifpb.kuatiaoka.UI.ComercioUi;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
+import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.servico.ServicoUsuario;
 import br.edu.ifpb.kuatiaoka.servico.ServicoVenda;
 
@@ -41,7 +43,13 @@ public class VendaMenu {
                     System.out.print("\nDigite o ID Do Comprador: ");
                     int idUsuario = console.nextInt();
 
-                    servicoVenda.realizarVenda(idUsuario, jogoId);
+                    try {
+                        servicoVenda.realizarVenda(idUsuario, jogoId);
+                    } catch (UsuarioNaoEncontradoException e) {
+                        console.mensagemErro(e.getMessage());
+                    } catch (ItemNaoEncontradoException ex) {
+                        console.mensagemErro(ex.getMessage());
+                    }
                     console.mensagemSucesso("=== VENDA FEITA COM SUCESSO ===");
                     console.pause();
 

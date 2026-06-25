@@ -3,6 +3,7 @@ package br.edu.ifpb.kuatiaoka.UI.ItensUI;
 import java.math.BigDecimal;
 
 import br.edu.ifpb.kuatiaoka.UI.Util.Console;
+import br.edu.ifpb.kuatiaoka.excecao.EditoraNaoEncontradaException;
 import br.edu.ifpb.kuatiaoka.modelo.Editora.Editora;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.GeneroLiterario;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.TipoJogo;
@@ -43,7 +44,7 @@ public class ItemCadastro {
         do {
             exibirCadastroItens();
 
-            System.out.println("\nEscolha Uma Opcao: ");
+            System.out.print("\nEscolha Uma Opcao: ");
             opcao = console.nextInt();
             switch (opcao) {
                 case 1:
@@ -63,7 +64,13 @@ public class ItemCadastro {
                     System.out.print("\nDigite o ID da Editora Do Livro Fisico: ");
                     int idEditoraLivro = console.nextInt();
 
-                    Editora editora = servicoEditora.buscarEditoraPorId(idEditoraLivro);
+                    try {
+                        Editora editora = servicoEditora.buscarEditoraPorId(idEditoraLivro);
+                        livroFisico.setEditora(editora);
+                    } catch (EditoraNaoEncontradaException e) {
+                        console.mensagemErro(e.getMessage());
+                        console.pause();
+                    }
 
                     System.out.print("\nDigite o Ano De Publicacao Do Livro Fisico: ");
                     int anoDePublicacaoLivro = console.nextInt();
@@ -104,13 +111,12 @@ public class ItemCadastro {
                     livroFisico.setTitulo(tituloLivro);
                     livroFisico.setAutor(autorLivro);
                     livroFisico.setIsbn(isbnLivro);
-                    livroFisico.setEditora(editora);
                     livroFisico.setAnoDePublicacao(anoDePublicacaoLivro);
                     livroFisico.setEdicao(edicaoLivro);
                     livroFisico.setSinopse(sinopseLivro);
                     livroFisico.setNumeroDePaginas(numeroDePaginas);
                     servicoItem.adicionarItem(livroFisico);
-                    console.mensagemSucesso("LIVRO FISICO CADASTRADO COM SUCESSO" + livroFisico.getId());
+                    console.mensagemSucesso("=== LIVRO FISICO CADASTRADO COM SUCESSO |  ID: " + livroFisico.getId() + " ===");
                     console.pause();
 
                     break;
@@ -128,10 +134,16 @@ public class ItemCadastro {
                     String isbnAudiolivro = console.nextLine();
 
                     servicoEditora.listarEditoras();
-                    System.out.print("\nDigite o ID da Editora Do Livro Fisico: ");
+                    System.out.print("\nDigite o ID da Editora Do Audiolivro: ");
                     int idEditoraAudiolivro = console.nextInt();
 
-                    Editora editoraAudiolivro = servicoEditora.buscarEditoraPorId(idEditoraAudiolivro);
+                    try {
+                        Editora editoraAudiolivro = servicoEditora.buscarEditoraPorId(idEditoraAudiolivro);
+                        audiolivro.setEditora(editoraAudiolivro);
+                    } catch (EditoraNaoEncontradaException e) {
+                        console.mensagemErro(e.getMessage());
+                        console.pause();
+                    }
 
                     System.out.print("\nDigite o Ano De Publicacao Do Audiolivro: ");
                     int anoDePublicacaoAudiolivro = console.nextInt();
@@ -140,7 +152,7 @@ public class ItemCadastro {
                     String edicaoAudiolivro = console.nextLine();
 
                     System.out.println("1 - Ficcao Cientifica | 2 - Romance | 3 - Terror | 4 - Biografia | 5 - Outro");
-                    System.out.print("\nEscolha o Genero Literario Do Livro: ");
+                    System.out.print("\nEscolha o Genero Literario Do AudioLivro: ");
                     int opcaoGeneroAudiolivro = console.nextInt();
                     switch (opcaoGeneroAudiolivro) {
                         case 1:
@@ -164,7 +176,7 @@ public class ItemCadastro {
                             break;
                     }
 
-                    System.out.print("\nDigite a Sinopse do Livro Fisico: ");
+                    System.out.print("\nDigite a Sinopse do Audiolivro: ");
                     String sinopseAudiolivro = console.nextLine();
 
                     System.out.print("\nDigite a Duracao Em Minutos Do Audiolivro: ");
@@ -173,17 +185,18 @@ public class ItemCadastro {
                     audiolivro.setTitulo(tituloAudiolivro);
                     audiolivro.setAutor(autorAudiolivro);
                     audiolivro.setIsbn(isbnAudiolivro);
-                    audiolivro.setEditora(editoraAudiolivro);
                     audiolivro.setAnoDePublicacao(anoDePublicacaoAudiolivro);
                     audiolivro.setEdicao(edicaoAudiolivro);
                     audiolivro.setSinopse(sinopseAudiolivro);
                     audiolivro.setDuracaoMinutos(duracaoAudiolivro);
                     servicoItem.adicionarItem(audiolivro);
-                    console.mensagemSucesso("AUDIOLIVRO CADASTRADO COM SUCESSO" + audiolivro.getId());
+                    console.mensagemSucesso("=== AUDIOLIVRO CADASTRADO COM SUCESSO |  ID: " + audiolivro.getId() + " ===");
                     console.pause();
 
                     break;
                 case 3:
+                    Revista revista = new Revista();
+
                     System.out.println("=== CADASTRO DE REVISTA ===");
                     System.out.print("\nDigite o Titulo Da Revista: ");
                     String tituloRevista = console.nextLine();
@@ -201,25 +214,29 @@ public class ItemCadastro {
                     int numeroRevista = console.nextInt();
 
                     servicoEditora.listarEditoras();
-                    System.out.print("\nDigite o ID da Editora Do Livro Fisico: ");
+                    System.out.print("\nDigite o ID da Editora Da Revista: ");
                     int idEditoraRevista = console.nextInt();
 
-                    Editora editoraRevista = servicoEditora.buscarEditoraPorId(idEditoraRevista);
+                    try {
+                        Editora editoraRevista = servicoEditora.buscarEditoraPorId(idEditoraRevista);
+                        revista.setEditora(editoraRevista);
+
+                    } catch (EditoraNaoEncontradaException e) {
+                        console.mensagemErro(e.getMessage());
+                        console.pause();
+                    }
 
                     System.out.print("\nDigite a Data Da Publicacao Da Revista No Formato dd/MM/aaaa: ");
                     String dataPubliRevista = console.nextLine();
-
-                    Revista revista = new Revista();
 
                     revista.setTitulo(tituloRevista);
                     revista.setAutor(autorRevista);
                     revista.setIssn(issnRevista);
                     revista.setVolume(volumeRevista);
                     revista.setNumero(numeroRevista);
-                    revista.setEditora(editoraRevista);
                     revista.setDataDePublicacaoString(dataPubliRevista);
                     servicoItem.adicionarItem(revista);
-                    console.mensagemSucesso("REVISTA CADASTRADA COM SUCESSO" + revista.getId());
+                    console.mensagemSucesso("=== REVISTA CADASTRADA COM SUCESSO |  ID: " + revista.getId() + " ===");
                     console.pause();
 
                     break;
@@ -245,7 +262,8 @@ public class ItemCadastro {
                     cd.setTitulo(tituloCd);
                     cd.setAutor(artistaCd);
                     cd.setListaDeFaixas(faixaInformadas);
-                    console.mensagemSucesso("CD CADASTRADO COM SUCESSO" + cd.getId());
+                    servicoItem.adicionarItem(cd);
+                    console.mensagemSucesso("=== CD CADASTRADO COM SUCESSO |  ID: " + cd.getId() + " ===");
                     console.pause();
 
                     break;
@@ -286,7 +304,7 @@ public class ItemCadastro {
                     jogo.setQtdPecas(qtdPecas);
                     jogo.setPreco(preco);
                     servicoVenda.cadastrarJogo(jogo);
-                    console.mensagemSucesso("JOGO CADASTRADO COM SUCESSO" + jogo.getIdJogo());
+                    console.mensagemSucesso("=== JOGO CADASTRADO COM SUCESSO |  ID: " + jogo.getId() + " ===");
                     console.pause();
 
                     break;

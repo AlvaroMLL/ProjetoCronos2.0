@@ -13,23 +13,31 @@ import br.edu.ifpb.kuatiaoka.excecao.UsuarioNaoRegularizadoException;
 import br.edu.ifpb.kuatiaoka.modelo.Emprestimo.Emprestimo;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusEmprestimo;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
-import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
+import br.edu.ifpb.kuatiaoka.modelo.Interface.Emprestavel;
+import br.edu.ifpb.kuatiaoka.modelo.Item.Jogo;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
 
 public class ServicoEmprestimo {
     private ServicoUsuario servicoUsuario;
     private ServicoItem servicoItem;
+    private ServicoVenda servicoVenda;
     private ArrayList<Emprestimo> emprestimos = new ArrayList<>();
+
+    public ServicoEmprestimo(ServicoUsuario servicoUsuario,ServicoItem servicoItem,ServicoVenda servicoVenda) {
+        this.servicoUsuario = servicoUsuario;
+        this.servicoItem = servicoItem;
+        this.servicoVenda = servicoVenda;
+    }
 
     public void realizarEmprestimo(int idUsuario, int idItem) {
         Usuario usuarioAchado = servicoUsuario.buscarUsuarioPorId(idUsuario);
-        Item itemAchado = servicoItem.buscarItemPorId(idItem);
+        Emprestavel itemAchado = servicoItem.buscarItemEmprestavelPorId(idItem);
 
         if (itemAchado.getStatusItem() != StatusItem.DISPONIVEL) {
             throw new ItemIndisponivelException("=== ERRO: ITEM INDISPONIVEL ===");
         }
         if (temEmprestimoEmAtraso(usuarioAchado)) {
-            throw new EmprestimoEmAtrasoException("=== ERRO: EMPRESTIMO ATRASADO ===");
+            throw new EmprestimoEmAtrasoException("=== ERRO:USUARIO TEM EMPRESTIMO ATRASADO ===");
         }
 
         int totalAtivos = contarEmprestimosAtivos(usuarioAchado);
@@ -38,7 +46,7 @@ public class ServicoEmprestimo {
             throw new UsuarioNaoRegularizadoException("=== ERRO: USUARIO NAO REGULARIZADO ===");
         }
         if (totalAtivos >= usuarioAchado.getLimiteEmprestimos()) {
-            throw new LimiteEmprestimosException("=== ERRO: LIMITE DE EMPRESTIMOS ATINGIDO ===");
+            throw new LimiteEmprestimosException("=== ERRO: LIMITE DE EMPRESTIMOS DO USUARIO ATINGIDO ===");
         }
 
         Emprestimo emprestimo = new Emprestimo();
@@ -52,6 +60,42 @@ public class ServicoEmprestimo {
         emprestimo.setDataPrevista(LocalDate.now().plusDays(dias));
 
         itemAchado.setStatusItem(StatusItem.EMPRESTADO);
+        emprestimos.add(emprestimo);
+    }
+
+    public void realizarEmprestimoJogo(int idUsuario, int idJogo) {
+        Usuario usuarioAchado = servicoUsuario.buscarUsuarioPorId(idUsuario);
+        Jogo jogoAchado = servicoVenda.buscarJogoPorId(idJogo);
+
+        if (jogoAchado.getStatusItem() != StatusItem.DISPONIVEL) {
+            throw new ItemIndisponivelException("=== ERRO: JOGO INDISPONIVEL ===");
+        }
+
+        if (temEmprestimoEmAtraso(usuarioAchado)) {
+            throw new EmprestimoEmAtrasoException("=== ERRO: USUARIO TEM EMPRESTIMO ATRASADO ===");
+        }
+
+        int totalAtivos = contarEmprestimosAtivos(usuarioAchado);
+
+        if (!usuarioAchado.isRegularizado()) {
+            throw new UsuarioNaoRegularizadoException("=== ERRO: USUARIO NAO REGULARIZADO ===");
+        }
+
+        if (totalAtivos >= usuarioAchado.getLimiteEmprestimos()) {
+            throw new LimiteEmprestimosException("=== ERRO: LIMITE DE EMPRESTIMOS DO USUARIO ATINGIDO ===");
+        }
+
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.setUsuario(usuarioAchado);
+        emprestimo.setItemEmprestado(jogoAchado);
+
+        int dias = usuarioAchado.calcularPrazo(jogoAchado);
+
+        emprestimo.setDataDoEmprestimo(LocalDate.now());
+        emprestimo.setDataPrevista(LocalDate.now().plusDays(dias));
+
+        jogoAchado.setStatusItem(StatusItem.EMPRESTADO);
+
         emprestimos.add(emprestimo);
     }
 
@@ -152,7 +196,7 @@ public class ServicoEmprestimo {
             System.out.println("ID: " + emprestimo.getIdDoEmprestimo() +
                     "\nNome Do Comprador: " + emprestimo.getUsuario().getNome() +
                     "\nData De Devolucao: " + emprestimo.getDataDevolucao() +
-                    "\nValor Multa: " + emprestimo.getValorMulta()  +
+                    "\nValor Multa: " + emprestimo.getValorMulta() +
                     "\nStatus Do Emprestimo: " + emprestimo.getStatus());
         }
     }

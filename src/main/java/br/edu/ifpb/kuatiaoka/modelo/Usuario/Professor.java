@@ -1,6 +1,6 @@
 package br.edu.ifpb.kuatiaoka.modelo.Usuario;
 
-import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
+import br.edu.ifpb.kuatiaoka.modelo.Interface.Emprestavel;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Livro;
 
 public class Professor extends Usuario {
@@ -22,7 +22,7 @@ public class Professor extends Usuario {
     }
 
     @Override
-    public int calcularPrazo(Item item) {
+    public int calcularPrazo(Emprestavel item) {
         if (item instanceof Livro) {
             return PRAZO_EMPRESTIMO_LIVROS;
         }

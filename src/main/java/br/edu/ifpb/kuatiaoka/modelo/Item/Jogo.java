@@ -2,6 +2,7 @@ package br.edu.ifpb.kuatiaoka.modelo.Item;
 
 import java.math.BigDecimal;
 
+import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.TipoJogo;
 import br.edu.ifpb.kuatiaoka.modelo.Interface.Emprestavel;
 import br.edu.ifpb.kuatiaoka.modelo.Interface.Vendivel;
@@ -14,5 +15,11 @@ public class Jogo implements Emprestavel, Vendivel {
     private int qtdPecas;
     private BigDecimal preco;
     private TipoJogo tipoJogo;
-    private int idJogo;
+    private int id;
+    private StatusItem statusItem = StatusItem.DISPONIVEL;
+
+    @Override
+    public String getTitulo() {
+        return nome;
+    }
 }

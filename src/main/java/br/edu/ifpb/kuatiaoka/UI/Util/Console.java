@@ -6,14 +6,13 @@ public class Console {
     private static final Scanner scanner = new Scanner(System.in);
 
     public void pause() {
-        System.out.println("\nPressione ENTER para continuar...");
+        System.out.print("\nPressione ENTER para continuar...");
         scanner.nextLine();
     }
 
     public int nextInt() {
         while (true) {
             try {
-                System.out.print("\nDigite Uma Opcao: ");
                 return Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
                 mensagemErro("=== ERRO: DIGITE APENAS NUMEROS ===");

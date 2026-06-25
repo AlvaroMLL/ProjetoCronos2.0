@@ -1,6 +1,6 @@
 package br.edu.ifpb.kuatiaoka.modelo.Usuario;
 
-import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
+import br.edu.ifpb.kuatiaoka.modelo.Interface.Emprestavel;
 import lombok.Data;
 
 @Data
@@ -15,5 +15,15 @@ public abstract class Usuario {
 
     public abstract double getMultaDiaria();
 
-    public abstract int calcularPrazo(Item item);
+    public abstract int calcularPrazo(Emprestavel item);
+
+    @Override
+    public String toString() {
+        return "====================================\n" +
+                "ID: " + id +
+                "\nNome: " + nome +
+                "\nEmail: " + email +
+                "\nRegularizado: " + regularizado +
+                "\nMulta Pendente: R$ " + multaPendente;
+    }
 }

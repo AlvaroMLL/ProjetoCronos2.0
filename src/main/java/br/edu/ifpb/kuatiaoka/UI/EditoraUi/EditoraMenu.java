@@ -26,7 +26,7 @@ public class EditoraMenu {
             exibirMenuEditora();
 
             System.out.print("\nEscolha uma Opcao: ");
-            console.nextInt();
+            opcao = console.nextInt();
 
             switch (opcao) {
                 case 1:

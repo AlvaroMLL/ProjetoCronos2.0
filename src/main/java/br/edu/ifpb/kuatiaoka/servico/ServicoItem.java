@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
 import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
+import br.edu.ifpb.kuatiaoka.modelo.Interface.Emprestavel;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Item;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Livro;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Revista;
@@ -49,22 +50,42 @@ public class ServicoItem {
         throw new ItemNaoEncontradoException("=== ERRO: ITEM NAO ENCONTRADO ===");
     }
 
+    public Emprestavel buscarItemEmprestavelPorId(int idBuscado) {
+        for (Item item : itens) {
+            if (item.getId() == idBuscado) {
+                if (item instanceof Emprestavel) {
+                    return (Emprestavel) item;
+                }
+                throw new ItemNaoEncontradoException(
+                        "=== ERRO: ITEM NAO E EMPRESTAVEL ===");
+            }
+        }
+
+        throw new ItemNaoEncontradoException(
+                "=== ERRO: ITEM NAO ENCONTRADO ===");
+    }
+
     public ArrayList<Item> buscarItemPorAutor(String autorBuscado) {
         ArrayList<Item> resultado = new ArrayList<>();
         for (Item item : itens) {
-            if (item.getAutor() == autorBuscado) {
+            if (item.getAutor().equalsIgnoreCase(autorBuscado)) {
                 resultado.add(item);
             }
         }
         return resultado;
     }
 
-    public ArrayList<Livro> buscarLivroPorEditora(String editoraBuscada) {
-        ArrayList<Livro> resultado = new ArrayList<>();
+    public ArrayList<Item> buscarItemPorEditora(String editoraBuscada) {
+        ArrayList<Item> resultado = new ArrayList<>();
         for (Item item : itens) {
-            if (item instanceof Livro livro) {
+            if (item instanceof Livro livro ) {
                 if (livro.getEditora().getNome().equalsIgnoreCase(editoraBuscada)) {
                     resultado.add(livro);
+                }
+            }
+            if (item instanceof Revista revista) {
+                if (revista.getEditora().getNome().equalsIgnoreCase(editoraBuscada)) {
+                    resultado.add(revista);
                 }
             }
         }

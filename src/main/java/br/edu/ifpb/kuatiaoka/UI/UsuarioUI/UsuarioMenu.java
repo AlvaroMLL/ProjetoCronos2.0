@@ -46,7 +46,7 @@ public class UsuarioMenu {
 
                     break;
                 case 3:
-                    servicoUsuario.listarUsuariosComMulta();
+                    System.out.println(servicoUsuario.listarUsuariosComMulta());
                     console.pause();
 
                     break;

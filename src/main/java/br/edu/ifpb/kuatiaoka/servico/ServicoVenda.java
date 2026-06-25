@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import br.edu.ifpb.kuatiaoka.excecao.ItemNaoEncontradoException;
+import br.edu.ifpb.kuatiaoka.modelo.Enum.StatusItem;
 import br.edu.ifpb.kuatiaoka.modelo.Item.Jogo;
 import br.edu.ifpb.kuatiaoka.modelo.Usuario.Usuario;
 import br.edu.ifpb.kuatiaoka.modelo.Venda.Venda;
@@ -14,12 +15,16 @@ public class ServicoVenda {
     private ServicoUsuario servicoUsuario;
     private int proximoIdJogo = 1;
 
+    public ServicoVenda(ServicoUsuario servicoUsuario) {
+        this.servicoUsuario = servicoUsuario;
+    }
+
     public int proximoIdJogo() {
         return proximoIdJogo;
     }
 
     public void cadastrarJogo(Jogo jogo) {
-        jogo.setIdJogo(proximoIdJogo);
+        jogo.setId(proximoIdJogo);
         this.jogos.add(jogo);
         proximoIdJogo++;
     }
@@ -30,7 +35,7 @@ public class ServicoVenda {
 
     public Jogo buscarJogoPorId(int idBuscado) {
         for (Jogo jogo : jogos) {
-            if (jogo.getIdJogo() == idBuscado) {
+            if (jogo.getId() == idBuscado) {
                 return jogo;
             }
         }
@@ -40,7 +45,7 @@ public class ServicoVenda {
     public void realizarVenda(int idUsuario, int idJogo) {
         Usuario usuarioAchado = servicoUsuario.buscarUsuarioPorId(idUsuario);
         Jogo jogoAchado = buscarJogoPorId(idJogo);
-
+        
         Venda venda = new Venda();
         venda.setComprador(usuarioAchado);
         venda.setDataVenda(LocalDate.now());
@@ -53,6 +58,7 @@ public class ServicoVenda {
 
     public void listarVendas() {
         for (Venda venda : vendas) {
+            System.out.println("===================================");
             System.out.println("ID: " + venda.getIdVenda() +
                     "\nNome: " + venda.getJogo().getNome() +
                     "\nValor: R$ " + venda.getValor() +
@@ -62,8 +68,16 @@ public class ServicoVenda {
 
     public void listarJogos() {
         for (Jogo jogo : jogos) {
-            System.out.println("ID: " + jogo.getIdJogo() + " | "
+            System.out.println("ID: " + jogo.getId() + " | "
                     + jogo.getNome() + ": " + jogo.getPreco());
+        }
+    }
+
+    public void listarJogosDisponiveis() {
+        for (Jogo jogo : jogos) {
+            if (jogo.getStatusItem() == StatusItem.DISPONIVEL) {
+                System.out.println("ID: " + jogo.getId() + " | Jogo: " + jogo.getNome());
+            }
         }
     }
 }
